@@ -2,11 +2,16 @@
   "name": "m4final",
   "version": "1",
   "description": "projeto m4",
-  "main": "index.ts",
+  "main": "server.ts",
   "repository": "https://github.com/m4-super-time/m4-final-LU_FE_MA_PA_SA_TA",
   "author": "m4",
   "license": "MIT",
-  "private": null,
+  "scripts": {
+    "dev": "ts-node-dev --ignore-watch node_modules src/server.ts",
+    "build": "tsc",
+    "typeorm": "typeorm-ts-node-commonjs",
+    "test": "cross-env NODE_ENV=test SECRET_KEY=secret_key jest --verbose --runInBand"
+  },
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "cross-env": "^7.0.3",
