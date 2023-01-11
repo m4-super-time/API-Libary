@@ -12,8 +12,10 @@ const createNewUserService = async (
     where: { email: dataUser.email },
     withDeleted: true,
   });
+  console.log(findUser)
+
   if (findUser) {
-    throw new AppError("user exists", 409);
+    throw new AppError("user already exists", 409);
   }
   const user = repositoryUser.create(dataUser);
   await repositoryUser.save(user);

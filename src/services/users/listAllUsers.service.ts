@@ -8,10 +8,10 @@ const listAllUsersService = async (): Promise<IUserResponse[]> => {
   const users = await repositoryUsers.find({
     withDeleted: true,
   });
+
   const userWithoutPasswordField = await userVetorSerializer.validate(users, {
     stripUnknown: true,
   });
-
 
   return userWithoutPasswordField;
 };
