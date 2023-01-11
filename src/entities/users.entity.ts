@@ -19,7 +19,7 @@ class User {
    
     @Column({default: false})
     isEmployee: boolean;
-    
+
     @Column({ length: 128 })
     password: string;
 
@@ -34,7 +34,7 @@ class User {
     hashPassword(){
         this.password=hashSync(this.password,10)
     }
-    
+
     @OneToOne(() => Addresses, (addresses) => addresses.user)
     addresses: Addresses
 }
