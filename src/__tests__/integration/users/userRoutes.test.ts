@@ -48,7 +48,7 @@ describe("/users", () => {
     test("GET /users - Must be able to list users", async() => {
         await request(app).post("/users").send(mockedEmployee);
         const employeeLoginResponse = await request(app).post("/login").send(mockedEmployeeLogin);
-        const response = await request(app).post("/users").set("Authorization", `Bearer ${employeeLoginResponse.body.token}`);
+        const response = await request(app).get("/users").set("Authorization", `Bearer ${employeeLoginResponse.body.token}`);
 
         expect(response.body).toHaveLength(2)
         expect(response.body[0]).not.toHaveProperty("password")
