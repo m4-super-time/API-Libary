@@ -16,4 +16,5 @@ interface IUser {
     updatedAt: Date;
 }
 
+
 export { IUserRequest, IUser };
