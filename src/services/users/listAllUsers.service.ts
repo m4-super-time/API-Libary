@@ -1,18 +1,9 @@
 import { AppDataSource } from "../../data-source";
 import { User } from "../../entities";
+import { IUserResponse } from "../../interfaces";
 import { userVetorSerializer } from "../../schemas/users";
 
-export interface IuserRequestList {
-  name: string;
-  email: string;
-  isEmployee: boolean;
-  id: string;
-  isActive: boolean;
-  createdAt: Date;
-  updatedAt: Date;
-}
-
-const listAllUsersService = async (): Promise<IuserRequestList[]> => {
+const listAllUsersService = async (): Promise<IUserResponse[]> => {
   const repositoryUsers = AppDataSource.getRepository(User);
   const users = await repositoryUsers.find({
     withDeleted: true,
@@ -20,6 +11,8 @@ const listAllUsersService = async (): Promise<IuserRequestList[]> => {
   const userWithoutPasswordField = await userVetorSerializer.validate(users, {
     stripUnknown: true,
   });
+
+
   return userWithoutPasswordField;
 };
 

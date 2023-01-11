@@ -2,11 +2,11 @@ import { AppDataSource } from "../../data-source";
 import { AppError } from "../../errors";
 import { User } from "../../entities";
 import { userWithoutPasswordFieldSerializer } from "../../schemas";
-import { IUserRequest, IUserRequestReturnedClient } from "../../interfaces";
+import { IUserRequest, IUserResponse } from "../../interfaces";
 
 const createNewUserService = async (
   dataUser: IUserRequest
-): Promise<IUserRequestReturnedClient> => {
+): Promise<IUserResponse> => {
   const repositoryUser = AppDataSource.getRepository(User);
   const findUser = await repositoryUser.findOne({
     where: { email: dataUser.email },

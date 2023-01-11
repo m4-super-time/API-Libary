@@ -15,14 +15,15 @@ interface IUser {
   createdAt: Date;
   updatedAt: Date;
 }
-interface IUserRequestReturnedClient {
-  name?: string;
-  email?: string;
-  isEmployee?: boolean;
-  id?: string;
-  isActive?: boolean;
-  createdAt?: Date;
-  updatedAt?: Date;
+
+interface IUserResponse {
+  id: string;
+  name: string;
+  email: string;
+  isEmployee: boolean;
+  isActive: boolean;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
-export { IUserRequest, IUser, IUserRequestReturnedClient };
+export { IUserRequest, IUser, IUserResponse };

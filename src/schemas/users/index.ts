@@ -1,17 +1,8 @@
 import * as yup from "yup";
 import { SchemaOf } from "yup";
-import { IUserRequestReturnedClient } from "../../interfaces";
+import { IUserResponse } from "../../interfaces";
 
-export interface IuserRequestList {
-  name: string;
-  email: string;
-  isEmployee: boolean;
-  id: string;
-  isActive: boolean;
-  createdAt: Date;
-  updatedAt: Date;
-}
-const userWithoutPasswordFieldSerializer: SchemaOf<IUserRequestReturnedClient> =
+const userWithoutPasswordFieldSerializer: SchemaOf<IUserResponse> =
   yup.object().shape({
     name: yup.string().notRequired(),
     email: yup.string().notRequired(),
@@ -22,12 +13,11 @@ const userWithoutPasswordFieldSerializer: SchemaOf<IUserRequestReturnedClient> =
     updatedAt: yup.date().notRequired(),
   });
 
-const userVetorSerializer: SchemaOf<IuserRequestList[]> = yup.array(
+const userVetorSerializer: SchemaOf<IUserResponse[]> = yup.array(
   userWithoutPasswordFieldSerializer
 );
 
 export {
   userWithoutPasswordFieldSerializer,
-  IUserRequestReturnedClient,
   userVetorSerializer,
 };
