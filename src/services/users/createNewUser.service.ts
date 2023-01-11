@@ -12,7 +12,6 @@ const createNewUserService = async (
     where: { email: dataUser.email },
     withDeleted: true,
   });
-  console.log(findUser)
 
   if (findUser) {
     throw new AppError("user already exists", 409);
