@@ -1,34 +1,32 @@
- import { Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn  } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn  } from "typeorm";
 import { User } from "./users.entity";
  
  
- @Entity('addresses')
- export class Addresses {
- 
-     @PrimaryGeneratedColumn('uuid')
-     id: string
- 
-     @Column()
-     zipCode: string
+@Entity('addresses')
+export class Addresses {
 
-     @Column()
-     street: string
+    @PrimaryGeneratedColumn('uuid')
+    id: string
 
-     @Column({nullable: true})
-     number: string
+    @Column()
+    zipCode: string
 
-     @Column({nullable: true})
-     neighborhood: string
-      
-     @Column()
-     city: string
- 
-     @Column()
-     state: string
+    @Column()
+    street: string
 
-     @OneToOne(()=> User)
-     @JoinColumn()
-     user: User
+    @Column({nullable: true})
+    number: string
 
+    @Column({nullable: true})
+    neighborhood: string
+    
+    @Column()
+    city: string
 
- }
+    @Column()
+    state: string
+
+    @OneToOne(()=> User, (user) => user.addresses)
+    @JoinColumn()
+    user: User
+}

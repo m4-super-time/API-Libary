@@ -1,5 +1,6 @@
 import { hashSync } from "bcryptjs";
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, BeforeUpdate, BeforeInsert } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, BeforeUpdate, BeforeInsert, OneToOne } from "typeorm";
+import { Addresses } from "./address.entity";
 
 @Entity ("users")
 class User { 
@@ -7,10 +8,10 @@ class User {
     @PrimaryGeneratedColumn("uuid")
     id:string;
 
-    @Column({ length: 120 })
+    @Column({ length: 128 })
     name:string;
 
-    @Column({  length: 120, unique: true })
+    @Column({  length: 128, unique: true })
     email:string;
 
     @Column({default: true})
@@ -19,13 +20,13 @@ class User {
     @Column({default: false})
     isEmployee: boolean;
     
-    @Column({ length: 120 })
+    @Column({ length: 128 })
     password: string;
 
     @CreateDateColumn()
     createdAt: Date;     
   
-    @UpdateDateColumn  ()
+    @UpdateDateColumn()
     updatedAt: Date;
 
     @BeforeUpdate()
@@ -34,6 +35,8 @@ class User {
         this.password=hashSync(this.password,10)
     }
     
+    @OneToOne(() => Addresses, (addresses) => addresses.user)
+    addresses: Addresses
 }
 
 export { User }
