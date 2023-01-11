@@ -1,5 +1,5 @@
 interface IBooksRequest {
-    product_name: string,
+    name: string,
     price: number,
     author: string,
     synopsis: string
@@ -7,28 +7,28 @@ interface IBooksRequest {
 
 interface IBooksResponse {
     id: string,
-    product_name: string,
+    name: string,
     price: number,
     author: string,
     synopsis: string,
-    category_id: string
+    categoryId: string
 }
 
 interface IStockBooks {
-    book_qntd: number
+    bookQntd: number
 }
 
 interface IBooksCart {
     id: string,
     isActive: boolean,
-    cart_id: string,
-    book_id: string
+    cartId: string,
+    bookId: string
 }
 
 interface IBooksCategory {
     id: string,
-    category_id: string,
-    book_id: string
+    categoryId: string,
+    bookId: string
 }
 
 export { IBooksRequest, IBooksResponse, IStockBooks, IBooksCart, IBooksCategory }
