@@ -1,8 +1,8 @@
 interface ICart {
     id: string,
     status: string,
-    book_id: string,
-    user_id: string
+    bookId: string,
+    userId: string
 }
 
 export { ICart }

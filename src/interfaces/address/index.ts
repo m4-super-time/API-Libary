@@ -2,7 +2,7 @@ interface IAddressRequest {
     zipCode: string,
     street: string,
     number?: number,
-    neighborhood: string,
+    neighborhood?: string,
     city: string,
     state: string
 }
@@ -15,7 +15,7 @@ interface IAddress {
     neighborhood: string,
     city: string,
     state: string,
-    user_id: string
+    userId: string
 }
 
 export { IAddress, IAddressRequest }
