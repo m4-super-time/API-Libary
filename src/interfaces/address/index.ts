@@ -15,7 +15,7 @@ interface IAddress {
     neighborhood: string,
     city: string,
     state: string,
-    userId: string
+    userId: {}
 }
 
 export { IAddress, IAddressRequest }
