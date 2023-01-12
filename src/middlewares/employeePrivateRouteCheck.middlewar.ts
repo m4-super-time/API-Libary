@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction, request } from "express";
+import { Request, Response, NextFunction } from "express";
 import "dotenv/config";
 
 const employeePrivateRouteCheckMiddlewar = async (
@@ -6,6 +6,7 @@ const employeePrivateRouteCheckMiddlewar = async (
   res: Response,
   next: NextFunction
 ) => {
+  
   const isEmployee = req.user.isEmployee;
 
   if (!isEmployee) {

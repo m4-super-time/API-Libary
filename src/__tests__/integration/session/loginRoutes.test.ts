@@ -2,7 +2,7 @@ import { DataSource } from "typeorm";
 import request from "supertest";
 import { AppDataSource } from "../../../data-source";
 import app from "../../../app";
-import { mockedEmployee, mockedEmployeeLogin } from "../../mocks";
+import { mockedEmployee, mockedEmployeeLogin, mockedUser, mockedUserLogin } from "../../mocks";
 
 describe("/login", () => {
     let connection: DataSource;
@@ -39,13 +39,14 @@ describe("/login", () => {
     });
 
     test("POST /login - should not be able to login with the user with isActive = false", async() => {
+        await request(app).post("/users").send(mockedUser);
         const employeeLoginResponse = await request(app).post("/login").send(mockedEmployeeLogin);
 
         const userToBeDeleted = await request(app).get("/users").set("Authorization", `Bearer ${employeeLoginResponse.body.token}`)
 
-        await request(app).delete(`users/${userToBeDeleted.body[0].id}`);
+        await request(app).delete(`/users/${userToBeDeleted.body[1].id}`).set("Authorization", `Bearer ${employeeLoginResponse.body.token}`);
 
-        const response = await request(app).post("/login").send(mockedEmployeeLogin);
+        const response = await request(app).post("/login").send(mockedUserLogin);
 
         expect(response.body).toHaveProperty("message")
         expect(response.status).toBe(400)

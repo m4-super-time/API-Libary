@@ -20,8 +20,8 @@ const verifyActiveMiddleware = async (
     throw new AppError("User or password invalid", 403);
   }
 
-  if (!user.isActive) {
-    throw new AppError("Not possible", 403);
+  if(!user.isActive) {
+    throw new AppError("Not possible", 400)
   }
 
   return next();

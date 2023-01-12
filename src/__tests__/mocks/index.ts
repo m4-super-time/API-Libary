@@ -1,30 +1,13 @@
-import { ICreateSessionRequest, IUserRequest } from "../../interfaces";
+import { mockedEmployee, mockedEmployeeLogin, mockedInvalidLogin, mockedUser, mockedUserLogin } from "./users";
+import { mockedUserAddress, mockedUserAddressUpdate, mockedEmployeeAddress } from "./address";
 
-export const mockedUser: IUserRequest = {
-    name: "Sarah",
-    email: "sarah@teste.com",
-    password: "123456",
-    isEmployee: false
-}
-
-export const mockedEmployee: IUserRequest = {
-    name: "Felipe",
-    email: "felipe@teste.com",
-    password: "123456",
-    isEmployee: true
-}
-
-export const mockedUserLogin: ICreateSessionRequest = {
-    email: "sarah@teste.com",
-    password: "123456"
-}
-
-export const mockedEmployeeLogin: ICreateSessionRequest = {
-    email: "felipe@teste.com",
-    password: "123456"
-}
-
-export const mockedInvalidLogin: ICreateSessionRequest = {
-    email: "wrongemail",
-    password: "123456"
-}
+export { 
+    mockedEmployee, 
+    mockedEmployeeLogin, 
+    mockedInvalidLogin, 
+    mockedUser, 
+    mockedUserLogin,
+    mockedUserAddress, 
+    mockedUserAddressUpdate, 
+    mockedEmployeeAddress
+};

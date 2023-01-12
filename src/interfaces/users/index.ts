@@ -9,7 +9,7 @@ interface IUser {
   id: string;
   name: string;
   email: string;
-  isActive: string;
+  isActive: boolean;
   isEmployee: boolean;
   password: string;
   createdAt: Date;
