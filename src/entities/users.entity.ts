@@ -1,6 +1,8 @@
 import { hashSync } from "bcryptjs";
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, BeforeUpdate, BeforeInsert, OneToOne } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, BeforeUpdate, BeforeInsert, OneToOne, OneToMany } from "typeorm";
 import { Addresses } from "./address.entity";
+import { Cart } from "./cart.entity";
+import { Order } from "./orders.entity";
 
 @Entity ("users")
 class User { 
@@ -37,6 +39,14 @@ class User {
 
     @OneToOne(() => Addresses, (addresses) => addresses.user)
     addresses: Addresses
+
+    @OneToMany(() => Order, order=> order.user)
+    orders:Order[]
+
+    @OneToMany(() => Cart, cart=> cart.user)
+    cart: Cart[]
+
+    
 }
 
 export { User }
