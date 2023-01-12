@@ -257,7 +257,8 @@ describe("/users", () => {
         const employeeToken = `Bearer ${employeeLoginResponse.body.token}`
         
         const userTobeUpdateRequest = await request(app).get("/users").set("Authorization", employeeToken)
-        const userTobeUpdateId = userTobeUpdateRequest.body[1].id
+
+        const userTobeUpdateId = userTobeUpdateRequest.body[0].id
 
         const response = await request(app).patch(`/users/${userTobeUpdateId}`).set("Authorization",userToken).send(newValues)
 

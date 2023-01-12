@@ -26,4 +26,11 @@ interface IUserResponse {
   updatedAt: Date;
 }
 
-export { IUserRequest, IUser, IUserResponse };
+interface IUpdateUserRequest {
+  name?: string;
+  email?: string;
+  password?: string;
+  updatedAt?: Date;
+}
+
+export { IUserRequest, IUser, IUserResponse, IUpdateUserRequest };
