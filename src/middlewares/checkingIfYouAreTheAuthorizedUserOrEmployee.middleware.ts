@@ -7,7 +7,6 @@ const checkingIfYouAreTheAuthorizedUserOrEmployeeMiddlewar = async (
   res: Response,
   next: NextFunction
 ) => {
-  console.log(req.user)
   const isEmployee = req.user.isEmployee;
 
   if (isEmployee) {
