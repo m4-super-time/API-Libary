@@ -1,7 +1,7 @@
 interface IAddressRequest {
     zipCode: string,
     street: string,
-    number?: number,
+    number?: string,
     neighborhood?: string,
     city: string,
     state: string
@@ -11,7 +11,7 @@ interface IAddress {
     id: string,
     zipCode: string,
     street: string,
-    number: number,
+    number: string,
     neighborhood: string,
     city: string,
     state: string,
