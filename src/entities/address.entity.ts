@@ -15,7 +15,7 @@ export class Addresses {
     street: string
 
     @Column({nullable: true})
-    number?: number
+    number?: string
 
     @Column({nullable: true})
     neighborhood?: string
