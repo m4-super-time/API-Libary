@@ -1,12 +1,13 @@
 import { AppDataSource } from "../../data-source";
 import jwt from "jsonwebtoken";
-import { ICreateSessionRequest } from "../../interfaces";
+import { ICreateSessionRequest, ICreateSessionResponse } from "../../interfaces";
 import { User } from "../../entities/users.entity"
 import { AppError } from "../../errors";
 import { compare } from "bcryptjs";
 import "dotenv/config"
+import { userWithoutPasswordFieldSerializer } from "../../schemas";
 
-const createSessionService = async ( userData: ICreateSessionRequest ): Promise<string> => {
+const createSessionService = async ( userData: ICreateSessionRequest ): Promise<ICreateSessionResponse> => {
 
     const userRepository = AppDataSource.getRepository(User)
 
@@ -32,7 +33,11 @@ const createSessionService = async ( userData: ICreateSessionRequest ): Promise<
         }
     )
 
-    return token
+    const userWithoutPasswordField = await userWithoutPasswordFieldSerializer.validate(user, {
+      stripUnknown: true,
+    });
+
+    return {token: token, user: userWithoutPasswordField};
 }
 
 export { createSessionService };

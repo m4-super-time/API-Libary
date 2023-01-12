@@ -17,7 +17,7 @@ const checkingIfYouAreTheAuthorizedUserOrEmployeeMiddlewar = async (
   const isUserIdParams = req.params.id;
   if (isUserId !== isUserIdParams) {
     throw new AppError(
-      "Not authorized! You can just delete your username.",
+      "Not authorized! You can just delete your own user.",
       401
     );
   }

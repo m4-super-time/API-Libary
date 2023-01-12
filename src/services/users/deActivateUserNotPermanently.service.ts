@@ -2,10 +2,11 @@
 import { AppDataSource } from "../../data-source";
 import { User } from "../../entities";
 import { AppError } from "../../errors";
+import { IUser } from "../../interfaces";
 
 const deActivateUserNotPermanentlyService = async (idRemove: string) => {
   const userRepository = AppDataSource.getRepository(User);
-  const user: any = await userRepository.findOne({
+  const user: IUser = await userRepository.findOne({
     where: { id: idRemove },
     withDeleted: true,
   });
@@ -17,7 +18,6 @@ const deActivateUserNotPermanentlyService = async (idRemove: string) => {
     throw new AppError("user is already deactivated", 400);
   }
 
-  await userRepository.delete(user);
   const userNotActive = await userRepository.save({ ...user, isActive: false });
   return {};
 };

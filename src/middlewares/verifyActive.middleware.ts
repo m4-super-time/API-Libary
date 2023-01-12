@@ -18,7 +18,7 @@ const verifyActiveMiddleware = async (req: Request, res: Response, next: NextFun
     }
 
     if(!user.isActive) {
-        throw new AppError("Not possible", 403)
+        throw new AppError("Not possible", 400)
     }
 
     return next()

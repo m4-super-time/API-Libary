@@ -104,7 +104,7 @@ describe("/users", () => {
         const response = await request(app).delete(`/users/${userToBeDeleted.body[0].id}`).set("Authorization", `Bearer ${employeeLoginResponse.body.token}`)
 
         const findUser = await request(app).get("/users").set("Authorization", `Bearer ${employeeLoginResponse.body.token}`)
-
+        
         expect(response.status).toBe(204)
         expect(findUser.body[0].isActive).toBe(false)
     });
