@@ -7,11 +7,11 @@ class Stock {
     id:string;
     
     @Column()
-    book_qntd:number
+    book_qntd: number
 
     @OneToOne(()=> Books)
     @JoinColumn()
-    book:Books
+    book: Books
 
 }
 

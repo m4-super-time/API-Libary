@@ -5,13 +5,13 @@ import { User } from "./users.entity";
 @Entity("orders")
  class Order{
     @PrimaryGeneratedColumn("uuid")
-    id:string
+    id: string
 
     @Column()
-    status:string
+    status: string
 
-    @Column('decimal', {precision:2, scale:12})
-    purchase_price:number
+    @Column("decimal", {precision: 12, scale:2})
+    purchase_price: number
 
     @ManyToOne(()=> User, user=> user.orders)
     user: User
