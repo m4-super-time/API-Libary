@@ -13,7 +13,7 @@ class Books {
     @Column()
     name:string
 
-    @Column('decimal', {precision:2, scale:12})
+    @Column('decimal', {precision: 12, scale: 2})
     price:number
 
     @Column()
@@ -34,8 +34,6 @@ class Books {
 
     @OneToMany(()=>BooksCategories, booksCategories=> booksCategories.book)
     booksCategories:BooksCategories[]
-
-
 
 }
 
