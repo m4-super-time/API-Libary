@@ -36,6 +36,9 @@ class Books {
   @OneToOne(() => Stock, (stock) => stock.book)
   stock: Stock;
 
+  @OneToOne(() => Stock, (stock) => stock.book)
+  stock: Stock;
+
   @OneToMany(() => BooksCategories, (booksCategories) => booksCategories.book)
   booksCategories: BooksCategories[];
 }
