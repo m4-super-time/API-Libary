@@ -3,6 +3,7 @@ interface IBooksRequest {
   price: number;
   author: string;
   synopsis: string;
+  categoryId: string;
 }
 
 interface IBooksResponse {
@@ -11,7 +12,7 @@ interface IBooksResponse {
   price: number;
   author: string;
   synopsis: string;
-  category: string;
+  categoryId: string;
 }
 
 interface IStockBooks {
