@@ -10,11 +10,11 @@ export const createAddressService = async (id:string, addressData:IAddressReques
     const userRepository = AppDataSource.getRepository(User)
 
     const userExists = await userRepository.findOneBy({
-        id:id
+        id
     })
 
     if(!userExists){
-        throw new AppError("User  exists", 400);
+        throw new AppError("User not exists", 400);
     }
 
 
@@ -32,7 +32,7 @@ export const createAddressService = async (id:string, addressData:IAddressReques
    
 
 
-         const instance = addressRepository.create({...addressData, user:userExists })
+         const instance = addressRepository.create({...addressData, user:{id:userExists.id }})
         await addressRepository.save(instance)
 
         return instance
