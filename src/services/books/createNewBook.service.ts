@@ -41,6 +41,7 @@ const createNewBookService = async (dataBook: IBooksRequest) => {
     category: categoryExists,
   });
   await repositoryBooksCategories.save(bookcategoryRegister);
+
   return instanceBook;
 };
 

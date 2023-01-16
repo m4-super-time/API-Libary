@@ -4,7 +4,12 @@ import request from "supertest";
 import app from "../../../app";
 import { book1, book2 } from "../../mocks/books";
 import { Categories } from "../../../entities/categories.entity";
-import { mockedEmployee, mockedEmployeeLogin, mockedUser, mockedUserLogin } from "../../mocks";
+import {
+  mockedEmployee,
+  mockedEmployeeLogin,
+  mockedUser,
+  mockedUserLogin,
+} from "../../mocks";
 
 describe("/books", () => {
   let connection: DataSource;
@@ -222,7 +227,7 @@ describe("/books", () => {
   });
 
   test("PATCH /books/:id - Should not be able to update book without authentication", async () => {
-    const updatePrice = { price: 40.00 };
+    const updatePrice = { price: 40.0 };
     const bookToBeUpdate = await request(app).get("/books");
 
     const response = await request(app)
@@ -234,7 +239,7 @@ describe("/books", () => {
   });
 
   test("PATCH /books/:id - Should not be able to update book with invalid id", async () => {
-    const updatePrice = { price: 40.00 };
+    const updatePrice = { price: 40.0 };
     const employeeLoginResponse = await request(app)
       .post("/login")
       .send(mockedEmployeeLogin);
@@ -281,7 +286,7 @@ describe("/books", () => {
   });
 
   test("PATCH /books/:id - Should be able to update book", async () => {
-    const updatePrice = { price: 40.00 };
+    const updatePrice = { price: 40.0 };
     const employeeLoginResponse = await request(app)
       .post("/login")
       .send(mockedEmployeeLogin);
@@ -294,7 +299,7 @@ describe("/books", () => {
 
     const updatedBook = await request(app).get("/books");
 
-    expect(updatedBook.body[0].id).toEqual(bookToBeUpdate.body[0].id)
+    expect(updatedBook.body[0].id).toEqual(bookToBeUpdate.body[0].id);
     expect(updatedBook.body[0].name).toEqual("Trono de Vidro");
     expect(updatedBook.body[0].price).toEqual(40.0);
     expect(response.status).toBe(200);
