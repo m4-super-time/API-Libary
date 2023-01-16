@@ -4,7 +4,12 @@ import request from "supertest";
 import app from "../../../app";
 import { book1, book2 } from "../../mocks/books";
 import { Categories } from "../../../entities/categories.entity";
-import { mockedEmployeeLogin, mockedUserLogin } from "../../mocks";
+import {
+  mockedEmployee,
+  mockedEmployeeLogin,
+  mockedUser,
+  mockedUserLogin,
+} from "../../mocks";
 
 describe("/books", () => {
   let connection: DataSource;
@@ -17,6 +22,9 @@ describe("/books", () => {
       .catch((err) => {
         console.error("Error during Data Source initialization", err);
       });
+
+    await request(app).post("/users").send(mockedEmployee);
+    await request(app).post("/users").send(mockedUser);
 
     const categoriesDb = connection.getRepository(Categories);
 
@@ -56,10 +64,10 @@ describe("/books", () => {
     expect(response.body).toHaveProperty("id");
     expect(response.body).toHaveProperty("name");
     expect(response.body).toHaveProperty("author");
-    expect(response.body).toHaveProperty("categoryId");
+    expect(response.body).toHaveProperty("category");
     expect(response.body).toHaveProperty("synopsis");
     expect(response.body.name).toEqual("Duna");
-    expect(response.status).toHaveProperty("201");
+    expect(response.status).toBe(201);
   });
 
   test("POST /books - Should not be able to create book without authorization", async () => {
@@ -71,8 +79,8 @@ describe("/books", () => {
 
     const response = await request(app).post("/books").send(createBook);
 
-    expect(response.body).toHaveProperty("id");
-    expect(response.status).toBe(201);
+    expect(response.body).toHaveProperty("message");
+    expect(response.status).toBe(401);
   });
 
   test("POST /books - Should not be able to create book without employee permission", async () => {
@@ -122,13 +130,15 @@ describe("/books", () => {
       .post("/login")
       .send(mockedEmployeeLogin);
 
+    book2.categoryId = "";
+
     const response = await request(app)
       .post("/books")
       .set("Authorization", `Bearer ${employeeLoginResponse.body.token}`)
       .send(book2);
 
     expect(response.body).toHaveProperty("message");
-    expect(response.status).toBe(400);
+    expect(response.status).toBe(401);
   });
 
   test("GET /books - Must be able to list all book", async () => {
@@ -236,7 +246,7 @@ describe("/books", () => {
 
     const response = await request(app)
       .patch(`/books/13970660-5dbe-423a-9a9d-5c23b37943cf`)
-      .set(employeeLoginResponse.body.token)
+      .set("Authorization", `Bearer ${employeeLoginResponse.body.token}`)
       .send(updatePrice);
 
     expect(response.body).toHaveProperty("message");
@@ -252,7 +262,7 @@ describe("/books", () => {
 
     const response = await request(app)
       .patch(`/books/${bookToBeUpdate.body[0].id}`)
-      .set(employeeLoginResponse.body.token)
+      .set("Authorization", `Bearer ${employeeLoginResponse.body.token}`)
       .send(updateId);
 
     expect(response.body).toHaveProperty("message");
@@ -268,11 +278,11 @@ describe("/books", () => {
 
     const response = await request(app)
       .patch(`/books/${bookToBeUpdate.body[0].id}`)
-      .set(userLoginResponse.body.token)
+      .set("Authorization", `Bearer ${userLoginResponse.body.token}`)
       .send(updatePrice);
 
     expect(response.body).toHaveProperty("message");
-    expect(response.status).toBe(401);
+    expect(response.status).toBe(403);
   });
 
   test("PATCH /books/:id - Should be able to update book", async () => {
@@ -284,11 +294,12 @@ describe("/books", () => {
 
     const response = await request(app)
       .patch(`/books/${bookToBeUpdate.body[0].id}`)
-      .set(employeeLoginResponse.body.token)
+      .set("Authorization", `Bearer ${employeeLoginResponse.body.token}`)
       .send(updatePrice);
 
     const updatedBook = await request(app).get("/books");
 
+    expect(updatedBook.body[0].id).toEqual(bookToBeUpdate.body[0].id);
     expect(updatedBook.body[0].name).toEqual("Trono de Vidro");
     expect(updatedBook.body[0].price).toEqual(40.0);
     expect(response.status).toBe(200);

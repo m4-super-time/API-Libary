@@ -3,7 +3,7 @@ interface IBooksRequest {
   price: number;
   author: string;
   synopsis: string;
-  category: string;
+  categoryId: string;
 }
 
 interface IBooksResponse {
