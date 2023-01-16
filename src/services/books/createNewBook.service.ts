@@ -40,6 +40,7 @@ const createNewBookService = async (dataBook: any) => {
     category: categoryExists,
   });
   await repositoryBooksCategories.save(bookcategoryRegister);
+
   return instanceBook;
 };
 

@@ -11,7 +11,7 @@ const listBookByIdService = async (BookId: string) => {
   if (!book) {
     throw new AppError("Book not exists", 400);
   }
-  console.log(book);
+
   return book;
 };
 
