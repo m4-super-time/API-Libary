@@ -119,7 +119,7 @@ describe("/books", () => {
         const response = await request(app).get("/books")
 
         expect(response.body).toHaveLength(2)
-        expect(response.status).toHaveProperty("200")
+        expect(response.status).toBe(200)
     })
 
     test("GET /books/:id - Must be able to get specific book", async() => {
