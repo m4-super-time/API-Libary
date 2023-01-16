@@ -32,10 +32,18 @@ interface IBooksCategory {
   bookId: string;
 }
 
+interface IBooksUpdateRequest {
+  name: string;
+  price: number;
+  author: string;
+  synopsis: string;
+}
+
 export {
   IBooksRequest,
   IBooksResponse,
   IStockBooks,
   IBooksCart,
   IBooksCategory,
+  IBooksUpdateRequest,
 };
