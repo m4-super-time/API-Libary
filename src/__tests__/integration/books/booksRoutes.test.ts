@@ -59,7 +59,7 @@ describe("/books", () => {
     expect(response.body).toHaveProperty("categoryId");
     expect(response.body).toHaveProperty("synopsis");
     expect(response.body.name).toEqual("Duna");
-    expect(response.status).toBe(201);
+    expect(response.status).toHaveProperty("201");
   });
 
   test("POST /books - Should not be able to create book without authorization", async () => {
@@ -163,102 +163,134 @@ describe("/books", () => {
     expect(response.body.name).toEqual("Trono de Vidro");
     expect(response.status).toBe(200);
   });
+
+  test("DELETE /books/:id - Should not be able to delete book without authorization", async () => {
+    const books = await request(app).get("/books");
+
+    const response = await request(app).delete(`/books/${books.body[0].id}`);
+
+    expect(response.body).toHaveProperty("message");
+    expect(response.status).toBe(401);
+  });
+
+  test("DELETE /books/:id - Should not be able to delete book not being employee", async () => {
+    const userLoginResponse = await request(app)
+      .post("/login")
+      .send(mockedUserLogin);
+    const bookToBeDeleted = await request(app).get("/books");
+
+    const response = await request(app)
+      .delete(`/books/${bookToBeDeleted.body[0].id}`)
+      .set("Authorization", `Bearer ${userLoginResponse.body.token}`);
+
+    expect(response.body).toHaveProperty("message");
+    expect(response.status).toBe(403);
+  });
+
+  test("DELETE /books/:id - Must be able to delete a book", async () => {
+    const employeeLoginResponse = await request(app)
+      .post("/login")
+      .send(mockedEmployeeLogin);
+    const bookToBeDeleted = await request(app).get("/books");
+
+    const response = await request(app)
+      .delete(`/books/${bookToBeDeleted.body[0].id}`)
+      .set("Authorization", `Bearer ${employeeLoginResponse.body.token}`);
+
+    const findBook = await request(app).get("/books");
+
+    expect(findBook.body).toHaveLength(1);
+    expect(response.status).toBe(204);
+  });
+
+  test("DELETE /books/:id - Should not be able to delete book with invalid id", async () => {
+    const employeeLoginResponse = await request(app)
+      .post("/login")
+      .send(mockedEmployeeLogin);
+
+    const response = await request(app)
+      .delete("/books/13970660-5dbe-423a-9a9d-5c23b37943cf")
+      .set("Authorization", `Bearer ${employeeLoginResponse.body.token}`);
+
+    expect(response.body).toHaveProperty("message");
+    expect(response.status).toBe(404);
+  });
+
+  test("PATCH /books/:id - Should not be able to update book without authentication", async () => {
+    const updatePrice = { price: 40.0 };
+    const bookToBeUpdate = await request(app).get("/books");
+
+    const response = await request(app)
+      .patch(`/books/${bookToBeUpdate.body[0].id}`)
+      .send(updatePrice);
+
+    expect(response.body).toHaveProperty("message");
+    expect(response.status).toBe(401);
+  });
+
+  test("PATCH /books/:id - Should not be able to update book with invalid id", async () => {
+    const updatePrice = { price: 40.0 };
+    const employeeLoginResponse = await request(app)
+      .post("/login")
+      .send(mockedEmployeeLogin);
+
+    const response = await request(app)
+      .patch(`/books/13970660-5dbe-423a-9a9d-5c23b37943cf`)
+      .set(employeeLoginResponse.body.token)
+      .send(updatePrice);
+
+    expect(response.body).toHaveProperty("message");
+    expect(response.status).toBe(404);
+  });
+
+  test("PATCH /books/:id - Should not be able to update book id field", async () => {
+    const updateId = { id: "13970660-5dbe-423a-9a9d-5c23b37943cf" };
+    const employeeLoginResponse = await request(app)
+      .post("/login")
+      .send(mockedEmployeeLogin);
+    const bookToBeUpdate = await request(app).get("/books");
+
+    const response = await request(app)
+      .patch(`/books/${bookToBeUpdate.body[0].id}`)
+      .set(employeeLoginResponse.body.token)
+      .send(updateId);
+
+    expect(response.body).toHaveProperty("message");
+    expect(response.status).toBe(404);
+  });
+
+  test("PATCH /books/:id - Should not be able to update book not being employee", async () => {
+    const updatePrice = { price: 40.0 };
+    const userLoginResponse = await request(app)
+      .post("/login")
+      .send(mockedUserLogin);
+    const bookToBeUpdate = await request(app).get("/books");
+
+    const response = await request(app)
+      .patch(`/books/${bookToBeUpdate.body[0].id}`)
+      .set(userLoginResponse.body.token)
+      .send(updatePrice);
+
+    expect(response.body).toHaveProperty("message");
+    expect(response.status).toBe(401);
+  });
+
+  test("PATCH /books/:id - Should be able to update book", async () => {
+    const updatePrice = { price: 40.0 };
+    const employeeLoginResponse = await request(app)
+      .post("/login")
+      .send(mockedEmployeeLogin);
+    const bookToBeUpdate = await request(app).get("/books");
+
+    const response = await request(app)
+      .patch(`/books/${bookToBeUpdate.body[0].id}`)
+      .set(employeeLoginResponse.body.token)
+      .send(updatePrice);
+
+    const updatedBook = await request(app).get("/books");
+
+    expect(updatedBook.body[0].name).toEqual("Trono de Vidro");
+    expect(updatedBook.body[0].price).toEqual(40.0);
+    expect(response.status).toBe(200);
+  });
 });
-
-    test("DELETE /books/:id - Should not be able to delete book without authorization", async() => {
-        const books = await request(app).get("/books")
-
-        const response = await request(app).delete(`/books/${books.body[0].id}`)
-
-        expect(response.body).toHaveProperty("message")
-        expect(response.status).toBe(401)
-    })
-
-    test("DELETE /books/:id - Should not be able to delete book not being employee", async() => {
-        const userLoginResponse = await request(app).post("/login").send(mockedUserLogin);
-        const bookToBeDeleted = await request(app).get("/books");
-
-        const response = await request(app).delete(`/books/${bookToBeDeleted.body[0].id}`).set("Authorization", `Bearer ${userLoginResponse.body.token}`)
-
-        expect(response.body).toHaveProperty("message")
-        expect(response.status).toBe(403)
-    })
-
-    test("DELETE /books/:id - Must be able to delete a book", async() => {
-        const employeeLoginResponse = await request(app).post("/login").send(mockedEmployeeLogin);
-        const bookToBeDeleted = await request(app).get("/books");
-
-        const response = await request(app).delete(`/books/${bookToBeDeleted.body[0].id}`).set("Authorization", `Bearer ${employeeLoginResponse.body.token}`)
-
-        const findBook = await request(app).get("/books");
-
-        expect(findBook.body).toHaveLength(1)
-        expect(response.status).toBe(204)
-    })
-
-    test("DELETE /books/:id - Should not be able to delete book with invalid id", async() => {
-        const employeeLoginResponse = await request(app).post("/login").send(mockedEmployeeLogin);
-
-        const response = await request(app).delete("/books/13970660-5dbe-423a-9a9d-5c23b37943cf").set("Authorization", `Bearer ${employeeLoginResponse.body.token}`)
-
-        expect(response.body).toHaveProperty("message")
-        expect(response.status).toBe(404)
-    })
-
-    test("PATCH /books/:id - Should not be able to update book without authentication", async() => {
-        const updatePrice = {price: 40.00}
-        const bookToBeUpdate = await request(app).get("/books")
-
-        const response = await request(app).patch(`/books/${bookToBeUpdate.body[0].id}`).send(updatePrice)
-
-        expect(response.body).toHaveProperty("message")
-        expect(response.status).toBe(401)
-    })
-
-    test("PATCH /books/:id - Should not be able to update book with invalid id", async() => {
-        const updatePrice = {price: 40.00}
-        const employeeLoginResponse = await request(app).post("/login").send(mockedEmployeeLogin)
-
-        const response = await request(app).patch(`/books/13970660-5dbe-423a-9a9d-5c23b37943cf`).set(employeeLoginResponse.body.token).send(updatePrice)
-
-        expect(response.body).toHaveProperty("message")
-        expect(response.status).toBe(404)
-    })
-
-    test("PATCH /books/:id - Should not be able to update book id field", async() => {
-        const updateId = {id: "13970660-5dbe-423a-9a9d-5c23b37943cf"}
-        const employeeLoginResponse = await request(app).post("/login").send(mockedEmployeeLogin)
-        const bookToBeUpdate = await request(app).get("/books")
-
-        const response = await request(app).patch(`/books/${bookToBeUpdate.body[0].id}`).set(employeeLoginResponse.body.token).send(updateId)
-
-        expect(response.body).toHaveProperty("message")
-        expect(response.status).toBe(404)
-    })
-
-    test("PATCH /books/:id - Should not be able to update book not being employee", async() => {
-        const updatePrice = {price: 40.00}
-        const userLoginResponse = await request(app).post("/login").send(mockedUserLogin)
-        const bookToBeUpdate = await request(app).get("/books")
-
-        const response = await request(app).patch(`/books/${bookToBeUpdate.body[0].id}`).set(userLoginResponse.body.token).send(updatePrice)
-
-        expect(response.body).toHaveProperty("message")
-        expect(response.status).toBe(401)
-    })
-
-    test("PATCH /books/:id - Should be able to update book", async() => {
-        const updatePrice = {price: 40.00}
-        const employeeLoginResponse = await request(app).post("/login").send(mockedEmployeeLogin)
-        const bookToBeUpdate = await request(app).get("/books")
-
-        const response = await request(app).patch(`/books/${bookToBeUpdate.body[0].id}`).set(employeeLoginResponse.body.token).send(updatePrice)
-
-        const updatedBook = await request(app).get("/books")
-
-        expect(updatedBook.body[0].name).toEqual("Trono de Vidro")
-        expect(updatedBook.body[0].price).toEqual(40.00)
-        expect(response.status).toBe(200)
-    })
-
-})

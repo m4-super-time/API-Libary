@@ -7,7 +7,6 @@ import { Categories } from "../../entities/categories.entity";
 import { BooksCategories } from "../../entities/books_categories.entity";
 
 const createNewBookService = async (dataBook: any) => {
-  const categoryBody = dataBook.categories;
   const repositoryBooks = AppDataSource.getRepository(Books);
   const repositoryCategories = AppDataSource.getRepository(Categories);
   const repositoryBooksCategories =
@@ -21,12 +20,11 @@ const createNewBookService = async (dataBook: any) => {
   if (findBook) {
     throw new AppError("Book already registered in our database", 409);
   }
-
   const categoryExists = await repositoryCategories.findOneBy({
     category_name: dataBook.category,
   });
   if (!categoryExists) {
-    throw new AppError("category not exists", 409);
+    throw new AppError("category not exists", 401);
   }
 
   let instanceBook = repositoryBooks.create({
