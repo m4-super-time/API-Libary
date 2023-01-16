@@ -2,6 +2,8 @@ import { Request, Response } from "express";
 import { IBooksRequest } from "../../interfaces";
 import createNewBookService from "../../services/books/createNewBook.service";
 import listAllBooksService from "../../services/books/listAllBooks.service";
+import listBookByIdService from "../../services/books/listBookById.service";
+import updateBookService from "../../services/books/updateBook.service";
 
 export const createNewBookController = async (req: Request, res: Response) => {
   const dataBook: any = req.body;
@@ -14,5 +16,18 @@ export const createNewBookController = async (req: Request, res: Response) => {
 export const listAllBooksController = async (req: Request, res: Response) => {
   const allBooks = await listAllBooksService();
 
-  return res.status(201).json(allBooks);
+  return res.status(200).json(allBooks);
+};
+
+export const listBookByIdController = async (req: Request, res: Response) => {
+  const BookId = req.params.id;
+  const book = await listBookByIdService(BookId);
+  return res.status(200).json(book);
+};
+
+export const updateBookController = async (req: Request, res: Response) => {
+  const dataUpdate = req.body;
+  const idBookUpdate = req.params.id;
+  const sucessUpdate = updateBookService(dataUpdate, idBookUpdate);
+  return res.status(200).json(sucessUpdate);
 };

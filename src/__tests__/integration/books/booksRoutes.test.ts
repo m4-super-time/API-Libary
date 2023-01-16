@@ -6,131 +6,161 @@ import { book1, book2 } from "../../mocks/books";
 import { Categories } from "../../../entities/categories.entity";
 import { mockedEmployeeLogin, mockedUserLogin } from "../../mocks";
 
-
 describe("/books", () => {
-    let connection: DataSource
+  let connection: DataSource;
 
-    beforeAll(async() => {
-        await AppDataSource.initialize().then((res) => {
-            connection = res
-        }).catch((err) => {
-            console.error("Error during Data Source initialization", err)
-        })
+  beforeAll(async () => {
+    await AppDataSource.initialize()
+      .then((res) => {
+        connection = res;
+      })
+      .catch((err) => {
+        console.error("Error during Data Source initialization", err);
+      });
 
-        const categoriesDb = connection.getRepository(Categories)
+    const categoriesDb = connection.getRepository(Categories);
 
-        const aventura = categoriesDb.create({category_name: "Aventura", description: "Aventura muito legal"})
-        const acao = categoriesDb.create({category_name: "Ação", description: "Livros genero acao"})
+    const aventura = categoriesDb.create({
+      category_name: "Aventura",
+      description: "Aventura muito legal",
+    });
+    const acao = categoriesDb.create({
+      category_name: "Ação",
+      description: "Livros genero acao",
+    });
 
-        await categoriesDb.save(aventura)
-        await categoriesDb.save(acao)
+    await categoriesDb.save(aventura);
+    await categoriesDb.save(acao);
+  });
 
-    })
+  afterAll(async () => {
+    await connection.destroy();
+  });
 
-    afterAll(async() => {
-        await connection.destroy()
-    })
+  test("POST /books - Must be able to create a book", async () => {
+    const categories = await request(app).get("/categories");
+    const createBook = {
+      ...book1,
+      categoryId: categories.body[0].id,
+    };
 
-    test("POST /books - Must be able to create a book", async() => {
-        const categories = await request(app).get("/categories");
-        const createBook = {
-            ...book1,
-            categoryId: categories.body[0].id
-        }
+    const employeeLoginResponse = await request(app)
+      .post("/login")
+      .send(mockedEmployeeLogin);
 
-        const employeeLoginResponse = await request(app).post("/login").send(mockedEmployeeLogin)
+    const response = await request(app)
+      .post("/books")
+      .set("Authorization", `Bearer ${employeeLoginResponse.body.token}`)
+      .send(createBook);
 
-        const response = await request(app).post("/books").set("Authorization", `Bearer ${employeeLoginResponse.body.token}`).send(createBook)
+    expect(response.body).toHaveProperty("id");
+    expect(response.body).toHaveProperty("name");
+    expect(response.body).toHaveProperty("author");
+    expect(response.body).toHaveProperty("categoryId");
+    expect(response.body).toHaveProperty("synopsis");
+    expect(response.body.name).toEqual("Duna");
+    expect(response.status).toBe(201);
+  });
 
-        expect(response.body).toHaveProperty("id")
-        expect(response.body).toHaveProperty("name")
-        expect(response.body).toHaveProperty("author")
-        expect(response.body).toHaveProperty("categoryId")
-        expect(response.body).toHaveProperty("synopsis")
-        expect(response.body.name).toEqual("Duna")
-        expect(response.status).toHaveProperty("201")
-    })
+  test("POST /books - Should not be able to create book without authorization", async () => {
+    const categories = await request(app).get("/categories");
+    const createBook = {
+      ...book1,
+      categoryId: categories.body[0].id,
+    };
 
-    test("POST /books - Should not be able to create book without authorization", async() => {
-        const categories = await request(app).get("/categories");
-        const createBook = {
-            ...book1,
-            categoryId: categories.body[0].id
-        }
+    const response = await request(app).post("/books").send(createBook);
 
-        const response = await request(app).post("/books").send(createBook)
+    expect(response.body).toHaveProperty("id");
+    expect(response.status).toBe(201);
+  });
 
-        expect(response.body).toHaveProperty("id")
-        expect(response.status).toHaveProperty("201")
-    })
+  test("POST /books - Should not be able to create book without employee permission", async () => {
+    const categories = await request(app).get("/categories");
 
-    test("POST /books - Should not be able to create book without employee permission", async() => {
-        const categories = await request(app).get("/categories")
-        
-        const createBook = {
-            ...book2,
-            categoryId: categories.body[1].id
-        }
+    const createBook = {
+      ...book2,
+      categoryId: categories.body[1].id,
+    };
 
-        const userLoginResponse = await request(app).post("/login").send(mockedUserLogin)
+    const userLoginResponse = await request(app)
+      .post("/login")
+      .send(mockedUserLogin);
 
-        const response = await request(app).post("/books").set("Authorization", `Bearer ${userLoginResponse.body.token}`).send(createBook)
+    const response = await request(app)
+      .post("/books")
+      .set("Authorization", `Bearer ${userLoginResponse.body.token}`)
+      .send(createBook);
 
-        expect(response.body).toHaveProperty("message")
-        expect(response.status).toHaveProperty("403")
-    })
+    expect(response.body).toHaveProperty("message");
+    expect(response.status).toBe(403);
+  });
 
-    test("POST /books - Should not be able to create a repeated book", async() => {
-        const categories = await request(app).get("/categories")
-        
-        const createBook = {
-            ...book1,
-            categoryId: categories.body[0].id
-        }
+  test("POST /books - Should not be able to create a repeated book", async () => {
+    const categories = await request(app).get("/categories");
 
-        const employeeLoginResponse = await request(app).post("/login").send(mockedEmployeeLogin)
+    const createBook = {
+      ...book1,
+      categoryId: categories.body[0].id,
+    };
 
-        const response = await request(app).post("/books").set("Authorization", `Bearer ${employeeLoginResponse.body.token}`).send(createBook)
+    const employeeLoginResponse = await request(app)
+      .post("/login")
+      .send(mockedEmployeeLogin);
 
-        expect(response.body).toHaveProperty("message")
-        expect(response.status).toHaveProperty("409")
-    })
+    const response = await request(app)
+      .post("/books")
+      .set("Authorization", `Bearer ${employeeLoginResponse.body.token}`)
+      .send(createBook);
 
-    test("POST /books - Should not be able to create book with invalid category id", async() => {
-        const employeeLoginResponse = await request(app).post("/login").send(mockedEmployeeLogin)
+    expect(response.body).toHaveProperty("message");
+    expect(response.status).toBe(409);
+  });
 
-        const response = await request(app).post("/books").set("Authorization", `Bearer ${employeeLoginResponse.body.token}`).send(book2)
+  test("POST /books - Should not be able to create book with invalid category id", async () => {
+    const employeeLoginResponse = await request(app)
+      .post("/login")
+      .send(mockedEmployeeLogin);
 
-        expect(response.body).toHaveProperty("message")
-        expect(response.status).toBe(400)
-    })
+    const response = await request(app)
+      .post("/books")
+      .set("Authorization", `Bearer ${employeeLoginResponse.body.token}`)
+      .send(book2);
 
-    test("GET /books - Must be able to list all book", async() => {
-        const categories = await request(app).get("/categories");
-        const createBook = {
-            ...book2,
-            categoryId: categories.body[1].id
-        }
+    expect(response.body).toHaveProperty("message");
+    expect(response.status).toBe(400);
+  });
 
-        const employeeLoginResponse = await request(app).post("/login").send(mockedEmployeeLogin)
+  test("GET /books - Must be able to list all book", async () => {
+    const categories = await request(app).get("/categories");
+    const createBook = {
+      ...book2,
+      categoryId: categories.body[1].id,
+    };
 
-        await request(app).post("/books").set("Authorization", `Bearer ${employeeLoginResponse.body.token}`).send(createBook)
+    const employeeLoginResponse = await request(app)
+      .post("/login")
+      .send(mockedEmployeeLogin);
 
-        const response = await request(app).get("/books")
+    await request(app)
+      .post("/books")
+      .set("Authorization", `Bearer ${employeeLoginResponse.body.token}`)
+      .send(createBook);
 
-        expect(response.body).toHaveLength(2)
-        expect(response.status).toHaveProperty("200")
-    })
+    const response = await request(app).get("/books");
 
-    test("GET /books/:id - Must be able to get specific book", async() => {
-        const books = await request(app).get("/books")
+    expect(response.body).toHaveLength(2);
+    expect(response.status).toBe(200);
+  });
 
-        const response = await request(app).get(`/books/${books.body[1].id}`)
+  test("GET /books/:id - Must be able to get specific book", async () => {
+    const books = await request(app).get("/books");
 
-        expect(response.body).toHaveProperty("id")
-        expect(response.body).toHaveProperty("name")
-        expect(response.body.name).toEqual("Trono de Vidro")
-        expect(response.status).toHaveProperty("200")
-    })
+    const response = await request(app).get(`/books/${books.body[1].id}`);
 
-})
+    expect(response.body).toHaveProperty("id");
+    expect(response.body).toHaveProperty("name");
+    expect(response.body.name).toEqual("Trono de Vidro");
+    expect(response.status).toBe(200);
+  });
+});
