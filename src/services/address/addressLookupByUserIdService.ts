@@ -3,14 +3,16 @@ import { Addresses } from "../../entities"
 
 export const addressLookupByUserIdService = async (id: string)=>{
 
-    const adderessRepository = AppDataSource.getRepository(Addresses)
+    const addressRepository = AppDataSource.getRepository(Addresses)
 
-    const AddressesExists = adderessRepository.findOneBy({
-        user:{
-            id
-        }
-        
+    const addressesExists = await addressRepository.findOne({
+        where: {
+            user: {
+                id
+            }
+        },
+        loadRelationIds: true
     })
 
-    return AddressesExists
+    return addressesExists
 }

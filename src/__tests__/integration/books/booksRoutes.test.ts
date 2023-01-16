@@ -260,8 +260,8 @@ describe("/books", () => {
       .set("Authorization", `Bearer ${employeeLoginResponse.body.token}`)
       .send(updateId);
 
-    expect(response.body).toHaveProperty("message");
-    expect(response.status).toBe(404);
+    expect(response.body.id).toEqual(bookToBeUpdate.body[0].id);
+    expect(response.status).toBe(200);
   });
 
   test("PATCH /books/:id - Should not be able to update book not being employee", async () => {

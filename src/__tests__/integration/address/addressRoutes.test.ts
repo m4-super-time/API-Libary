@@ -34,6 +34,7 @@ describe("/address", () => {
         expect(response.body).toHaveProperty("zipCode")
         expect(response.body).toHaveProperty("neighborhood")
         expect(response.body).toHaveProperty("number")
+        expect(response.body).toHaveProperty("user")
         expect(response.status).toBe(201)
 
     })
@@ -73,7 +74,7 @@ describe("/address", () => {
         expect(response.body).toHaveProperty("zipCode")
         expect(response.body).toHaveProperty("neighborhood")
         expect(response.body).toHaveProperty("number")
-        expect(response.body).toHaveProperty("userId")
+        expect(response.body).toHaveProperty("user")
         expect(response.status).toBe(200)
     })
 
