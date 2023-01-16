@@ -6,7 +6,7 @@ import { Books } from "../../entities/books.entity";
 import { Categories } from "../../entities/categories.entity";
 import { BooksCategories } from "../../entities/books_categories.entity";
 
-const createNewBookService = async (dataBook: any) => {
+const createNewBookService = async (dataBook: IBooksRequest) => {
   const repositoryBooks = AppDataSource.getRepository(Books);
   const repositoryCategories = AppDataSource.getRepository(Categories);
   const repositoryBooksCategories =
@@ -30,7 +30,7 @@ const createNewBookService = async (dataBook: any) => {
 
   let instanceBook = repositoryBooks.create({
     ...dataBook,
-    category: categoryExists.id,
+    category: categoryExists,
   });
   await repositoryBooks.save(instanceBook);
   const registredBook = await repositoryBooks.findOneBy({
@@ -41,6 +41,7 @@ const createNewBookService = async (dataBook: any) => {
     category: categoryExists,
   });
   await repositoryBooksCategories.save(bookcategoryRegister);
+
   return instanceBook;
 };
 
