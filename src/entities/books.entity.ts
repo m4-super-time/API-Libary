@@ -38,7 +38,9 @@ class Books {
   @OneToOne(() => Stock, (stock) => stock.book)
   stock: Stock;
 
-  @OneToMany(() => BooksCategories, (booksCategories) => booksCategories.book)
+  @OneToMany(() => BooksCategories, (booksCategories) => booksCategories.book, {
+    eager: true,
+  })
   booksCategories: BooksCategories[];
   @ManyToOne(() => Categories, (categories) => categories.book)
   category: Categories;
