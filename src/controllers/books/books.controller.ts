@@ -36,5 +36,5 @@ export const updateBookController = async (req: Request, res: Response) => {
 export const deleteBookController = async (req: Request, res: Response) => {
   const idBookRemove = req.params.id;
   const sucessDelete = await deleteBookService(idBookRemove);
-  return res.status(200).json(sucessDelete);
+  return res.status(204).json(sucessDelete);
 };

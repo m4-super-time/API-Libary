@@ -21,8 +21,9 @@ const createNewBookService = async (dataBook: any) => {
     throw new AppError("Book already registered in our database", 409);
   }
   const categoryExists = await repositoryCategories.findOneBy({
-    category_name: dataBook.category,
+    id: dataBook.categoryId,
   });
+
   if (!categoryExists) {
     throw new AppError("category not exists", 401);
   }
