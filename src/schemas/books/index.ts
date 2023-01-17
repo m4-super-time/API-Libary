@@ -1,5 +1,5 @@
 import * as yup from "yup";
-import { IBooksUpdateRequest } from "../../interfaces/books";
+import { IBooksRequestt, IBooksUpdateRequest } from "../../interfaces/books";
 
 export const updateBookSchema: yup.SchemaOf<IBooksUpdateRequest> = yup
   .object()
@@ -8,4 +8,14 @@ export const updateBookSchema: yup.SchemaOf<IBooksUpdateRequest> = yup
     price: yup.number().notRequired(),
     author: yup.string().notRequired(),
     synopsis: yup.string().notRequired(),
+  });
+
+export const requestBookSchema: yup.SchemaOf<IBooksRequestt> = yup
+  .object()
+  .shape({
+    name: yup.string().required(),
+    price: yup.number().required(),
+    author: yup.string().required(),
+    synopsis: yup.string().required(),
+    category: yup.string().required(),
   });

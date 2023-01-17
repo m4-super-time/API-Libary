@@ -10,7 +10,7 @@ import { userTokenVerificationMiddleware } from "../../middlewares";
 import checkingIfYouAreTheAuthorizedUserOrEmployeeMiddlewar from "../../middlewares/checkingIfYouAreTheAuthorizedUserOrEmployee.middleware";
 import dataVerificationByYupMiddlewares from "../../middlewares/dataVerificationByYup.middleware";
 import employeePrivateRouteCheckMiddlewar from "../../middlewares/employeePrivateRouteCheck.middlewar";
-import { updateBookSchema } from "../../schemas/books";
+import { requestBookSchema, updateBookSchema } from "../../schemas/books";
 
 const booksRoutes = Router();
 
