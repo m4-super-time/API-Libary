@@ -27,22 +27,12 @@ const createBookOnCartService = async (newBook: ICartProduct, userId:string) :Pr
         throw new AppError("User not found", 400)
     }
 
-  /*  var findCart = await cartRepository.findOne({
-        relations: {
-            user:true
-        },
-        where: {
-            user: findUser
-        }
-    }) */
-
     var findCart = await cartRepository.createQueryBuilder('cart')
     .innerJoin("cart.user", "user")
     .where("cart.user = :id_user", {id_user: userId})
     .andWhere("cart.status = :status", { status : "open"})
-    .select("cart")
+    .select("*")
     .getOne()
-
 
     const newCartData = {
         status: "open",
@@ -52,7 +42,6 @@ const createBookOnCartService = async (newBook: ICartProduct, userId:string) :Pr
     if(!findCart || findCart.status === "closed"){
         findCart = cartRepository.create(newCartData)
         await cartRepository.save(findCart)
-        return cartRepository
     }
     
     const dataNewBookCart = {

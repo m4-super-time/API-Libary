@@ -7,7 +7,7 @@ import { ICart } from "../../interfaces";
 
 
 export const createBookOnCartController = async (req: Request, res: Response) => {
-    const newBook : ICart = req.body
+    const newBook : ICart = req.params.id
     const userId : string = req.user.id 
     const newCart = await createBookOnCartService(newBook, userId);
   
@@ -15,7 +15,9 @@ export const createBookOnCartController = async (req: Request, res: Response) =>
 };
 
 export const findCartController = async (req: Request, res: Response) => {
-    const newCart = await findCartService();
+    const findCart : ICart = req.params.id
+    const userId : string = req.user.id 
+    const newCart = await findCartService(findCart, userId);
   
     return res.status(200).json(newCart);
 };
