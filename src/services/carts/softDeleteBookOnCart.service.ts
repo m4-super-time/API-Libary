@@ -3,8 +3,8 @@ import { Books_Cart } from "../../entities/books_cart.entity"
 import { AppError } from "../../errors"
 
 
-const softDeleteBookOnCartService = async (bookCartId:string, userId:string) =>{
-    /* const bookCartRepository = AppDataSource.getRepository(Books_Cart)
+const softDeleteBookOnCartService = async (bookCartId:string, userId:string): Promise<object> =>{
+    const bookCartRepository = AppDataSource.getRepository(Books_Cart)
 
     if(!bookCartId){
         throw new AppError('Bad data', 400)
@@ -15,18 +15,19 @@ const softDeleteBookOnCartService = async (bookCartId:string, userId:string) =>{
     })
     if(!bookCart){
         throw new AppError('Not found', 404)
-    } */
+    }
 
-    /* await AppDataSource
+    await AppDataSource
     .createQueryBuilder()
     .update(Books_Cart)
     .set({ isActive: false })
     .where("id = :id", { id: bookCartId })
-    .execute() */
-/*     bookCart.isActive = false
+    .execute()
+
+    /* bookCart.isActive = false
     await bookCartRepository.save(bookCart) */
     
-    return ({message : "teste"})
+    return ({message : "Cart iten soft deleted"})
 }
     
 

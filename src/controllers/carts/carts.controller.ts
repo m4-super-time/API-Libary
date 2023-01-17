@@ -3,13 +3,13 @@ import createBookOnCartService from "../../services/carts/createBookOnCart.servi
 import findCartService from "../../services/carts/findCart.service";
 import softDeleteBookOnCartService from "../../services/carts/softDeleteBookOnCart.service";
 import deleteBookOnCartService from "../../services/carts/deleteBookOnCart.service";
-import { ICart } from "../../interfaces";
+
 
 
 export const createBookOnCartController = async (req: Request, res: Response) => {
-    const newBook : string = req.params.id
+    const newBookId : string = req.params.id
     const userId : string = req.user.id 
-    const newCart = await createBookOnCartService(newBook, userId);
+    const newCart = await createBookOnCartService(newBookId, userId);
   
     return res.status(201).json(newCart);
 };
