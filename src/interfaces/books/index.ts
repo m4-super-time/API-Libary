@@ -6,6 +6,14 @@ interface IBooksRequest {
   categoryId: string;
 }
 
+interface IBooksRequestt {
+  name: string;
+  price: number;
+  author: string;
+  synopsis: string;
+  category: string;
+}
+
 interface IBooksResponse {
   id: string;
   name: string;
@@ -46,4 +54,5 @@ export {
   IBooksCart,
   IBooksCategory,
   IBooksUpdateRequest,
+  IBooksRequestt,
 };
