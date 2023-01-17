@@ -152,9 +152,7 @@ describe("/address", () => {
         const addressToBeDeleted = await request(app).get(`/address/${userLoginResponse.body.user.id}`).set("Authorization", `Bearer ${userLoginResponse.body.token}`)
 
         const response = await request(app).delete(`/address/${userLoginResponse.body.user.id}`).set("Authorization", `Bearer ${userLoginResponse.body.token}`)
-        console.log(userLoginResponse.body.user.id)
-        console.log(response.body)
-        console.log(addressToBeDeleted.body.id)
+
         const employeeLoginResponse = await request(app).post("/login").send(mockedEmployeeLogin);
 
         const addressList = await request(app).get("/address").set("Authorization", `Bearer ${employeeLoginResponse.body.token}`)

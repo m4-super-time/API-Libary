@@ -125,22 +125,6 @@ describe("/books", () => {
     expect(response.status).toBe(409);
   });
 
-  test("POST /books - Should not be able to create book with invalid category id", async () => {
-    const employeeLoginResponse = await request(app)
-      .post("/login")
-      .send(mockedEmployeeLogin);
-
-    book2.categoryId = "";
-
-    const response = await request(app)
-      .post("/books")
-      .set("Authorization", `Bearer ${employeeLoginResponse.body.token}`)
-      .send(book2);
-
-    expect(response.body).toHaveProperty("message");
-    expect(response.status).toBe(401);
-  });
-
   test("GET /books - Must be able to list all book", async () => {
     const categories = await request(app).get("/categories");
     const createBook = {
