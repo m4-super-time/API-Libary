@@ -7,7 +7,7 @@ import listBookByIdService from "../../services/books/listBookById.service";
 import updateBookService from "../../services/books/updateBook.service";
 
 export const createNewBookController = async (req: Request, res: Response) => {
-  const dataBook: any = req.body;
+  const dataBook: IBooksRequest = req.body;
 
   const registerBook = await createNewBookService(dataBook);
 
