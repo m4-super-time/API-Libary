@@ -91,7 +91,7 @@ describe("/users", () => {
         const response = await request(app).delete(`/users/${userTobeDeleteId}`).set("Authorization",userToken)
 
         expect(response.body).toHaveProperty("message")
-        expect(response.status).toBe(401)
+        expect(response.status).toBe(403)
     });
 
     test("DELETE /users/:id - Must be able to softDelete user", async() => {
@@ -153,7 +153,7 @@ describe("/users", () => {
         const response = await request(app).delete(`/users/delete/${userTobeDeleteId}`).set("Authorization",userToken)
 
         expect(response.body).toHaveProperty("message")
-        expect(response.status).toBe(401)
+        expect(response.status).toBe(403)
     });
 
     test("DELETE /users/:id - Must be able to delete user", async() => {

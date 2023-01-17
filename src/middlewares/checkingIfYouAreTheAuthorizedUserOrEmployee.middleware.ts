@@ -18,7 +18,7 @@ const checkingIfYouAreTheAuthorizedUserOrEmployeeMiddleware = async (
   if (isUserId !== isUserIdParams) {
     throw new AppError(
       "Not authorized! You can just delete your own user.",
-      401
+      403
     );
   }
 
