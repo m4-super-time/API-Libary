@@ -29,13 +29,15 @@ export const addressLookupByUserIdController = async( req:Request, res:Response)
 export const addressUpdateController = async (req:Request, res: Response )=>{
     const dataReqBody:IAddressUpdate = req.body
     const id = req.params.id
-    const addressUpdate = await addressUpdateService(id,dataReqBody ) 
-    res.status(201).json(addressUpdate)
+
+    const addressUpdate = await addressUpdateService(id, dataReqBody) 
+    res.status(200).json(addressUpdate)
 }
 
 export const deleteAddressController = async (req:Request, res: Response)=>{
     const id = req.params.id
+    console.log(id)
     const addressRemove = await addressRemoveService(id)
-    res.status(204).json(addressRemove)
+    res.status(204).json({})
 
 }

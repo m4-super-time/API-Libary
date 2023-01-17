@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { addressLookupByUserIdController, addressUpdateController, createdAddressController, deleteAddressController, listAllAddAdressesEmployeeControllers } from "../../controllers/address/addressController";
 import { userTokenVerificationMiddleware } from "../../middlewares";
+import checkingIfYouAreTheAuthorizedUserOrEmployeeMiddleware from "../../middlewares/checkingIfYouAreTheAuthorizedUserOrEmployee.middleware";
 import employeePrivateRouteCheckMiddlewar from "../../middlewares/employeePrivateRouteCheck.middlewar";
 
 const addressRouter = Router()
@@ -18,7 +19,7 @@ addressRouter.get("/:id",  userTokenVerificationMiddleware , addressLookupByUser
 addressRouter.patch("/:id", userTokenVerificationMiddleware, addressUpdateController )
 
 //DELETAR ENDEREÇO
-addressRouter.delete("/delete/:id",userTokenVerificationMiddleware, deleteAddressController)
+addressRouter.delete("/delete/:id",userTokenVerificationMiddleware, checkingIfYouAreTheAuthorizedUserOrEmployeeMiddleware, deleteAddressController)
 
 
 export default addressRouter

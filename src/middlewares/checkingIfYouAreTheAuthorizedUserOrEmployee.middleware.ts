@@ -1,8 +1,8 @@
-import { Request, Response, NextFunction, request } from "express";
+import { Request, Response, NextFunction } from "express";
 import "dotenv/config";
 import { AppError } from "../errors";
 
-const checkingIfYouAreTheAuthorizedUserOrEmployeeMiddlewar = async (
+const checkingIfYouAreTheAuthorizedUserOrEmployeeMiddleware = async (
   req: Request,
   res: Response,
   next: NextFunction
@@ -25,4 +25,4 @@ const checkingIfYouAreTheAuthorizedUserOrEmployeeMiddlewar = async (
   return next();
 };
 
-export default checkingIfYouAreTheAuthorizedUserOrEmployeeMiddlewar;
+export default checkingIfYouAreTheAuthorizedUserOrEmployeeMiddleware;

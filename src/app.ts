@@ -7,7 +7,7 @@ import userRoutes from "./routes/users";
 import { categoriesRoutes } from "./routes/categories";
 import profileRoutes from "./routes/profile";
 import { booksRoutes } from "./routes/books";
-import addressRouter from "./routes/adderess/addressRouter";
+import addressRouter from "./routes/address/addressRouter";
 
 const app = express();
 app.use(express.json());
