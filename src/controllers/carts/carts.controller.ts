@@ -7,7 +7,7 @@ import { ICart } from "../../interfaces";
 
 
 export const createBookOnCartController = async (req: Request, res: Response) => {
-    const newBook : ICart = req.params.id
+    const newBook : string = req.params.id
     const userId : string = req.user.id 
     const newCart = await createBookOnCartService(newBook, userId);
   
@@ -15,7 +15,7 @@ export const createBookOnCartController = async (req: Request, res: Response) =>
 };
 
 export const findCartController = async (req: Request, res: Response) => {
-    const findCart : ICart = req.params.id
+    const findCart : string = req.params.id
     const userId : string = req.user.id 
     const newCart = await findCartService(findCart, userId);
   
@@ -23,15 +23,17 @@ export const findCartController = async (req: Request, res: Response) => {
 };
 
 export const softDeleteBookOnCartController = async (req: Request, res: Response) => {
-
-    const newCart = await softDeleteBookOnCartService();
-
+    const bookCart : string = req.params.id
+    const userId : string = req.user.id 
+    const newCart = await softDeleteBookOnCartService(bookCart, userId);
+    
     return res.status(201).json(newCart);
 }
 
 export const deleteBookOnCartController = async (req: Request, res: Response) => {
-
-    const newCart = await deleteBookOnCartService();
+    const bookCart : string = req.params.id
+    const userId : string = req.user.id 
+    const newCart = await deleteBookOnCartService(bookCart, userId);
     
     return res.status(201).json(newCart);
 }

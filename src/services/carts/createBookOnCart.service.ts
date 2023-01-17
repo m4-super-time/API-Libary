@@ -4,9 +4,8 @@ import { User } from "../../entities"
 import { AppError } from "../../errors"
 import { Books_Cart } from "../../entities/books_cart.entity"
 import { Books } from "../../entities/books.entity"
-import { ICartProduct } from "../../interfaces/cart"
 
-const createBookOnCartService = async (newBook: ICartProduct, userId:string) :Promise<object> =>{
+const createBookOnCartService = async (newBook: string, userId:string) :Promise<object> =>{
 
     const userRepository = AppDataSource.getRepository(User)
     const cartRepository = AppDataSource.getRepository(Cart)
@@ -14,7 +13,7 @@ const createBookOnCartService = async (newBook: ICartProduct, userId:string) :Pr
     const booksRepository = AppDataSource.getRepository(Books)
 
     const findBook = await booksRepository.findOneBy({
-        id:newBook.book_id
+        id:newBook
     })
     if(!findBook){
         throw new AppError("Book not found", 400)
@@ -56,5 +55,3 @@ const createBookOnCartService = async (newBook: ICartProduct, userId:string) :Pr
 }
 
 export default createBookOnCartService
-// ver se tem algum carrinho ativo, se nao tiver criar um novo carrinho
-// criar um livro na tabela pivo do livro e carrinho

@@ -1,5 +1,5 @@
-interface ICartProduct {
+interface ICart {
     book_id: string,
 }
 
-export { ICartProduct }
+export { ICart }

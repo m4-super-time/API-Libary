@@ -6,6 +6,9 @@ const findCartService = async (cartId: string, userId:string) =>{
 
 const booksCartRepository = AppDataSource.getRepository(Books_Cart)
 
+    if(!cartId){
+        throw new AppError("Bad data", 400)
+    }
 
     const findCartList = await booksCartRepository.createQueryBuilder('books_cart')
     .innerJoin("books_cart.cart", "cart")
