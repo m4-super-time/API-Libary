@@ -8,7 +8,7 @@ export const addressLookupByUserIdService = async (id: string)=>{
     const addressesExists = await addressRepository.findOne({
         where: {
             user: {
-                id
+                id: id
             }
         },
         loadRelationIds: true

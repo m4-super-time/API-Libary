@@ -9,7 +9,7 @@ import employeePrivateRouteCheckMiddlewar from "../../middlewares/employeePrivat
 
 import { userTokenVerificationMiddleware } from "../../middlewares";
 import { Router } from "express";
-import checkingIfYouAreTheAuthorizedUserOrEmployeeMiddlewar from "../../middlewares/checkingIfYouAreTheAuthorizedUserOrEmployee.middleware";
+import checkingIfYouAreTheAuthorizedUserOrEmployeeMiddleware from "../../middlewares/checkingIfYouAreTheAuthorizedUserOrEmployee.middleware";
 import invalidIdMiddlewarer from "../../middlewares/invalidId.middlewarer";
 import dataVerificationByYupMiddlewares from "../../middlewares/dataVerificationByYup.middleware";
 import {
@@ -41,13 +41,13 @@ userRoutes.patch(
 userRoutes.delete(
   "/delete/:id",
   userTokenVerificationMiddleware,
-  checkingIfYouAreTheAuthorizedUserOrEmployeeMiddlewar,
+  checkingIfYouAreTheAuthorizedUserOrEmployeeMiddleware,
   permanentlyDeleteUserController
 );
 userRoutes.delete(
   "/:id",
   userTokenVerificationMiddleware,
-  checkingIfYouAreTheAuthorizedUserOrEmployeeMiddlewar,
+  checkingIfYouAreTheAuthorizedUserOrEmployeeMiddleware,
   deActivateUserNotPermanentlyController
 );
 export default userRoutes;

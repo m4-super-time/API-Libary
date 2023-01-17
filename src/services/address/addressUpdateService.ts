@@ -8,7 +8,6 @@ import * as yup from "yup";
 export const addressUpdateService = async (id: string, dataReqBody:IAddressUpdate)=>{
 
     const addressRepository = AppDataSource.getRepository(Addresses)
-    const userRepository = AppDataSource.getRepository(User)
 
     try {
        await filterAddressId.validate(id)
@@ -19,21 +18,14 @@ export const addressUpdateService = async (id: string, dataReqBody:IAddressUpdat
     }
    }
 
-    const addressExists = await addressRepository.findOneBy({
-        user:{
+    const addressExists = await addressRepository.findOne({
+        where: {
             id
         }
     })
 
-    const userExist = await userRepository.findOneBy({
-        id
-    }) 
-
     if(!addressExists){
-        throw new AppError("non-existent id", 401)
-    }
-    if(!userExist){
-        throw new AppError("non-existent id", 401)
+        throw new AppError("non-existent id", 404)
     }
 
     const updateAddess = addressRepository.create({
