@@ -44,8 +44,20 @@ export const addressUpdateController = async (req: Request, res: Response) => {
   res.status(200).json(addressUpdate);
 };
 
-export const deleteAddressController = async (req: Request, res: Response) => {
-  const id = req.params.id;
-  const addressRemove = await addressRemoveService(id);
-  res.status(204).json({});
-};
+export const addressLookupByUserIdController = async( req:Request, res:Response)=>{
+    const searchAddressByUserId = await addressLookupByUserIdService(req.params.id)
+    return res.status(200).json(searchAddressByUserId)
+}
+
+export const addressUpdateController = async (req:Request, res: Response )=>{
+    const dataReqBody:IAddressUpdate = req.body
+    const id = req.params.id
+
+    const addressUpdate = await addressUpdateService(id, dataReqBody) 
+    res.status(200).json(addressUpdate)
+}
+
+export const deleteAddressController = async (req:Request, res: Response)=>{
+    const id = req.params.id
+    const addressRemove = await addressRemoveService(id)
+    res.status(204).json({})

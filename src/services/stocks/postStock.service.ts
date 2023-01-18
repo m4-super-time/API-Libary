@@ -21,18 +21,22 @@ const postStocksService = async (dataStock: IStockRequest, idBook: string) => {
         throw new AppError("Book not exists", 404)
     }
 
+    const bookStockExist = await stockRepository.findOneBy({
+        book: {
+            id: idBook
+        }
+    })
+
+    if(bookStockExist) {
+        throw new AppError("Book already have stock", 409)
+    }
+
     const stock = stockRepository.create({
         book_qntd: dataStock.book_qntd,
         book: bookExist
     })
 
     await stockRepository.save(stock)
-
-    const findStock = await stockRepository.findOne({
-        where: {
-            id: stock.id
-        }
-    })
 
     const findStock2 = {
         ...stock,

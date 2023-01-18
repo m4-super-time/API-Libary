@@ -5,25 +5,23 @@ import {
   updateStockController,
 } from "../../controllers/stocks/stocks.controller";
 import { userTokenVerificationMiddleware } from "../../middlewares";
-import checkingIfYouAreTheAuthorizedUserOrEmployeeMiddleware from "../../middlewares/checkingIfYouAreTheAuthorizedUserOrEmployee.middleware";
-import employeePrivateRouteCheckMiddlewar from "../../middlewares/employeePrivateRouteCheck.middlewar";
-import updateStockService from "../../services/stocks/updateStock.service";
-import invalidIdMiddlewarer from "../../middlewares/invalidId.middlewarer";
+import employeePrivateRouteCheckMiddleware from "../../middlewares/employeePrivateRouteCheck.middleware";
+import invalidBookIdMiddleware from "../../middlewares/invalidBookId.middleware";
 
 const stockRoutes = Router();
 
 stockRoutes.post(
-  "",
+  "/:id",
   userTokenVerificationMiddleware,
-  invalidIdMiddlewarer,
-  employeePrivateRouteCheckMiddlewar,
+  invalidBookIdMiddleware,
+  employeePrivateRouteCheckMiddleware,
   postStocksController
 );
 stockRoutes.get("", getAllStocksController);
 stockRoutes.patch(
   "/:id",
   userTokenVerificationMiddleware,
-  employeePrivateRouteCheckMiddlewar,
+  employeePrivateRouteCheckMiddleware,
   updateStockController
 );
 

@@ -9,7 +9,7 @@ const postStocksController = async (req: Request, res: Response) => {
     const idBook = req.params.id
     const dataStock: IStockRequest = req.body
     const stock = await postStocksService(dataStock, idBook)
-    return res.status(200).json(stock)
+    return res.status(201).json(stock)
 
 }
 

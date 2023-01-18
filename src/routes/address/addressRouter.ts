@@ -9,7 +9,7 @@ import {
 import { userTokenVerificationMiddleware } from "../../middlewares";
 import checkingIfYouAreTheAuthorizedUserOrEmployeeMiddleware from "../../middlewares/checkingIfYouAreTheAuthorizedUserOrEmployee.middleware";
 import dataVerificationByYupMiddlewares from "../../middlewares/dataVerificationByYup.middleware";
-import employeePrivateRouteCheckMiddlewar from "../../middlewares/employeePrivateRouteCheck.middlewar";
+import employeePrivateRouteCheckMiddlewar from "../../middlewares/employeePrivateRouteCheck.middleware";
 import { updateAddressSchema } from "../../schemas/address/addressSchema";
 
 const addressRouter = Router();
