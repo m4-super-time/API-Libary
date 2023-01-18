@@ -5,7 +5,7 @@ import app from "../../../app"
 import { Books } from "../../../entities/books.entity"
 import { Categories } from "../../../entities/categories.entity"
 import { book1, book2 } from "../../mocks/books"
-import { mockedEmployeeLogin, mockedUserLogin } from "../../mocks"
+import { mockedEmployee, mockedEmployeeLogin, mockedUser, mockedUserLogin } from "../../mocks"
 
 describe("/stocks", () => {
     let connection: DataSource
@@ -34,6 +34,9 @@ describe("/stocks", () => {
 
         await booksDb.save(book1)
         await booksDb.save(book2)
+
+        await request(app).post("/users").send(mockedEmployee)
+        await request(app).post("/users").send(mockedUser)
     })
 
     afterAll(async() => {
@@ -43,8 +46,7 @@ describe("/stocks", () => {
     test("POST /stocks/:id - Should not be able to add stock to book without authorization", async() => {
         const bookToAddStock = await request(app).get("/books")
 
-        const response = await request(app).post(`/stock/${bookToAddStock.body[0].id}`).send({book_qntd: 100})
-
+        const response = await request(app).post(`/stocks/${bookToAddStock.body[0].id}`).send({book_qntd: 100})
         expect(response.body).toHaveProperty("message")
         expect(response.status).toBe(401)
     })
@@ -52,7 +54,7 @@ describe("/stocks", () => {
     test("POST /stocks/:id - Should not be able to add stock to book with invalid id", async() => {
         const employeeLoginResponse = await request(app).post("/login").send(mockedEmployeeLogin);
 
-        const response = await request(app).post(`/stock/13970660-5dbe-423a-9a9d-5c23b37943cf`).set("Authorization", `Bearer ${employeeLoginResponse.body.token}`).send({book_qntd: 100})
+        const response = await request(app).post(`/stocks/13970660-5dbe-423a-9a9d-5c23b37943cf`).set("Authorization", `Bearer ${employeeLoginResponse.body.token}`).send({book_qntd: 100})
 
         expect(response.body).toHaveProperty("message")
         expect(response.status).toBe(404)
@@ -63,7 +65,7 @@ describe("/stocks", () => {
 
         const bookToAddStock = await request(app).get("/books")
 
-        const response = await request(app).post(`/stock/${bookToAddStock.body[0].id}`).set("Authorization", `Bearer ${userLoginResponse.body.token}`).send({book_qntd: 100})
+        const response = await request(app).post(`/stocks/${bookToAddStock.body[0].id}`).set("Authorization", `Bearer ${userLoginResponse.body.token}`).send({book_qntd: 100})
 
         expect(response.body).toHaveProperty("message")
         expect(response.status).toBe(403)
@@ -73,8 +75,7 @@ describe("/stocks", () => {
         const employeeLoginResponse = await request(app).post("/login").send(mockedEmployeeLogin);
 
         const bookToAddStock = await request(app).get("/books")
-
-        const response = await request(app).post(`/stock/${bookToAddStock.body[0].id}`).set("Authorization", `Bearer ${employeeLoginResponse.body.token}`).send({book_qntd: 100})
+        const response = await request(app).post(`/stocks/${bookToAddStock.body[0].id}`).set("Authorization", `Bearer ${employeeLoginResponse.body.token}`).send({book_qntd: 100})
 
         expect(response.body).toHaveProperty("id")
         expect(response.body.book_qntd).toEqual(100)
@@ -86,7 +87,7 @@ describe("/stocks", () => {
 
         const bookToAddStock = await request(app).get("/books")
 
-        const response = await request(app).post(`/stock/${bookToAddStock.body[0].id}`).set("Authorization", `Bearer ${employeeLoginResponse.body.token}`).send({book_qntd: 100})
+        const response = await request(app).post(`/stocks/${bookToAddStock.body[0].id}`).set("Authorization", `Bearer ${employeeLoginResponse.body.token}`).send({book_qntd: 100})
 
         expect(response.body).toHaveProperty("message")
         expect(response.status).toBe(409)
@@ -95,7 +96,7 @@ describe("/stocks", () => {
     test("PATCH /stocks/:id - Should not be able to update stock of book without authorization", async() => {
         const bookToUpdateStock = await request(app).get("/books")
 
-        const response = await request(app).post(`/stock/${bookToUpdateStock.body[0].id}`).send({book_qntd: 150})
+        const response = await request(app).post(`/stocks/${bookToUpdateStock.body[0].id}`).send({book_qntd: 150})
 
         expect(response.body).toHaveProperty("message")
         expect(response.status).toBe(401)
@@ -106,7 +107,7 @@ describe("/stocks", () => {
 
         const bookToUpdateStock = await request(app).get("/books")
 
-        const response = await request(app).post(`/stock/${bookToUpdateStock.body[0].id}`).set("Authorization", `Bearer ${userLoginResponse.body.token}`).send({book_qntd: 150})
+        const response = await request(app).post(`/stocks/${bookToUpdateStock.body[0].id}`).set("Authorization", `Bearer ${userLoginResponse.body.token}`).send({book_qntd: 150})
 
         expect(response.body).toHaveProperty("message")
         expect(response.status).toBe(403)
@@ -117,7 +118,7 @@ describe("/stocks", () => {
 
         const bookToUpdateStock = await request(app).get("/books")
 
-        const response = await request(app).post(`/stock/${bookToUpdateStock.body[0].id}`).set("Authorization", `Bearer ${employeeLoginResponse.body.token}`).send({book_qntd: 150})
+        const response = await request(app).post(`/stocks/${bookToUpdateStock.body[0].id}`).set("Authorization", `Bearer ${employeeLoginResponse.body.token}`).send({book_qntd: 150})
 
         const bookToUpdatedStock = await request(app).get("/books")
 
