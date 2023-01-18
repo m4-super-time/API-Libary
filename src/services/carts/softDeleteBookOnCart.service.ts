@@ -10,11 +10,25 @@ const softDeleteBookOnCartService = async (bookCartId:string, userId:string): Pr
         throw new AppError('Bad data', 400)
     }
 
+    if(!userId){
+        throw new AppError('Bad data', 400)
+    }
+
     const bookCart = await bookCartRepository.findOneBy({
         id:bookCartId
     })
     if(!bookCart){
         throw new AppError('Not found', 404)
+    }
+
+    const findCart = await bookCartRepository.createQueryBuilder('books_cart')
+    .innerJoin("books_cart.cart", "cart")
+    .where("cart.user = :id_user", { id_user : userId })
+    .andWhere("books_cart.id = :id", { id : bookCartId })
+    .getOne()
+
+    if(!findCart){
+        throw new AppError('Unauthorized', 403)
     }
 
     await AppDataSource
@@ -24,8 +38,6 @@ const softDeleteBookOnCartService = async (bookCartId:string, userId:string): Pr
     .where("id = :id", { id: bookCartId })
     .execute()
 
-    /* bookCart.isActive = false
-    await bookCartRepository.save(bookCart) */
     
     return ({message : "Cart iten soft deleted"})
 }

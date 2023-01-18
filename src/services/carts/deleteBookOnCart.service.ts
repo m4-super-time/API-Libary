@@ -22,16 +22,15 @@ const deleteBookOnCartService = async (bookCartId:string, userId:string): Promis
         throw new AppError('Not found', 404)
     }
 
-    /* const findCart = await bookCartRepository.createQueryBuilder('books_cart')
+    const findCart = await bookCartRepository.createQueryBuilder('books_cart')
     .innerJoin("books_cart.cart", "cart")
-    .where("cart.user = :id_user", { id_user: userId })
+    .where("cart.user = :id_user", { id_user : userId })
     .andWhere("books_cart.id = :id", { id : bookCartId })
-    .select("*")
     .getOne()
 
     if(!findCart){
         throw new AppError('Unauthorized', 403)
-    } */
+    }
 
     await bookCartRepository.delete({
         id:bookCartId

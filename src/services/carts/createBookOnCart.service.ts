@@ -15,6 +15,10 @@ const createBookOnCartService = async (newBookId: string, userId:string) :Promis
     if(!newBookId){
         throw new AppError('Bad data', 400)
     }
+    
+    if(!userId){
+        throw new AppError('Bad data', 400)
+    }
 
     const findBook = await booksRepository.findOneBy({
         id:newBookId
@@ -31,7 +35,6 @@ const createBookOnCartService = async (newBookId: string, userId:string) :Promis
     }
 
     var findCart = await cartRepository.createQueryBuilder('cart')
-    .innerJoin("cart.user", "user")
     .where("cart.user = :id_user", {id_user: userId})
     .andWhere("cart.status = :status", { status: "open" })
     .select("cart")
