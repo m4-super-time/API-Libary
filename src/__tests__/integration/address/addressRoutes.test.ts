@@ -124,34 +124,34 @@ describe("/address", () => {
         expect(response.status).toBe(200)
     })
 
-    test("DELETE /address/:id - Should not be able to delete address without authentication", async() => {
+    test("DELETE /address/delete/:id - Should not be able to delete address without authentication", async() => {
         const userLoginResponse = await request(app).post("/login").send(mockedUserLogin);
         const addressToBeDeleted = await request(app).get(`/address/${userLoginResponse.body.user.id}`).set("Authorization", `Bearer ${userLoginResponse.body.token}`)
 
-        const response = await request(app).delete(`/address/${addressToBeDeleted.body.id}`)
+        const response = await request(app).delete(`/address/delete/${addressToBeDeleted.body.id}`)
 
         expect(response.body).toHaveProperty("message")
         expect(response.status).toBe(401)
     })
 
-    test("DELETE /address/:id - Should not be able to delete another user address not being employee", async() => {
+    test("DELETE /address/delete/:id - Should not be able to delete another user address not being employee", async() => {
         const userLoginResponse = await request(app).post("/login").send(mockedUserLogin);
         const employeeLoginResponse = await request(app).post("/login").send(mockedEmployeeLogin);
 
         const addressToBeDeleted = await request(app).get(`/address/${employeeLoginResponse.body.user.id}`).set("Authorization", `Bearer ${userLoginResponse.body.token}`)
 
-        const response = await request(app).delete(`/address/${addressToBeDeleted.body.id}`).set("Authorization", `Bearer ${userLoginResponse.body.token}`)
+        const response = await request(app).delete(`/address/delete/${addressToBeDeleted.body.id}`).set("Authorization", `Bearer ${userLoginResponse.body.token}`)
 
         expect(response.body).toHaveProperty("message")
         expect(response.status).toBe(403)
     })
 
-    test("DELETE /address/:id - Must be able to delete address", async() => {
+    test("DELETE /address/delete/:id - Must be able to delete address", async() => {
         const userLoginResponse = await request(app).post("/login").send(mockedUserLogin);
 
         const addressToBeDeleted = await request(app).get(`/address/${userLoginResponse.body.user.id}`).set("Authorization", `Bearer ${userLoginResponse.body.token}`)
 
-        const response = await request(app).delete(`/address/${userLoginResponse.body.user.id}`).set("Authorization", `Bearer ${userLoginResponse.body.token}`)
+        const response = await request(app).delete(`/address/delete/${userLoginResponse.body.user.id}`).set("Authorization", `Bearer ${userLoginResponse.body.token}`)
 
         const employeeLoginResponse = await request(app).post("/login").send(mockedEmployeeLogin);
 
