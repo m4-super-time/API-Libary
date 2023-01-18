@@ -45,5 +45,4 @@ class Books {
   @ManyToOne(() => Categories, (categories) => categories.book)
   category: Categories;
 }
-
 export { Books };
