@@ -4,7 +4,7 @@ import { AppError } from "../../errors";
 
 const permanentlyDeleteUserService = async (idRemove: string) => {
   const userRepository = AppDataSource.getRepository(User);
-  const user: any = await userRepository.findOne({
+  const user = await userRepository.findOne({
     where: { id: idRemove },
     withDeleted: true,
   });

@@ -7,7 +7,7 @@ const deleteBookService = async (idRemove: string) => {
   const bookRepository = AppDataSource.getRepository(Books);
   const booksCategoriesRepository =
     AppDataSource.getRepository(BooksCategories);
-  const bookRemove: any = await bookRepository.findOneBy({
+  const bookRemove: Books | any = await bookRepository.findOneBy({
     id: idRemove,
   });
 

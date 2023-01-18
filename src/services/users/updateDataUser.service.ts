@@ -1,13 +1,13 @@
 import { AppDataSource } from "../../data-source";
 import { User } from "../../entities";
 import { AppError } from "../../errors";
-import { IUpdateUserRequest } from "../../interfaces/users";
+import { IUpdateUserRequest, IUserResponse } from "../../interfaces/users";
 import { userWithoutPasswordFieldSerializer } from "../../schemas";
 
 const updateDataUserService = async (
   dataUserUpdate: IUpdateUserRequest,
   idUser: string
-) => {
+): Promise<IUserResponse> => {
   const userRepository = AppDataSource.getRepository(User);
   const keysUser = Object.keys(dataUserUpdate);
 
