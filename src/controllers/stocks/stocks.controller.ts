@@ -24,7 +24,7 @@ const updateStockController = async (req: Request, res: Response) => {
     const dataUpdate: IStockRequest = req.body
     const idStock: string = req.params.id
     const updateStock = await updateStockService(dataUpdate, idStock)
-    return res.status(204).json(updateStock)
+    return res.json(updateStock)
 
 }
 
