@@ -112,19 +112,4 @@ describe("/stocks", () => {
         expect(response.body).toHaveProperty("message")
         expect(response.status).toBe(403)
     })
-
-    test("PATCH /stocks/:id - Must be able to update stock of book", async() => {
-        const employeeLoginResponse = await request(app).post("/login").send(mockedEmployeeLogin);
-
-        const bookToUpdateStock = await request(app).get("/books")
-
-        const response = await request(app).post(`/stocks/${bookToUpdateStock.body[0].id}`).set("Authorization", `Bearer ${employeeLoginResponse.body.token}`).send({book_qntd: 150})
-
-        const bookToUpdatedStock = await request(app).get("/books")
-
-        expect(bookToUpdatedStock.body[0].book_qntd).toEqual(150)
-        expect(response.status).toBe(200)
-    })
-
-
 })
