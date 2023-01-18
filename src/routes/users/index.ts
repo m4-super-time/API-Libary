@@ -12,9 +12,7 @@ import { Router } from "express";
 import checkingIfYouAreTheAuthorizedUserOrEmployeeMiddleware from "../../middlewares/checkingIfYouAreTheAuthorizedUserOrEmployee.middleware";
 import invalidUserIdMiddleware from "../../middlewares/invalidUserId.middleware";
 import dataVerificationByYupMiddlewares from "../../middlewares/dataVerificationByYup.middleware";
-import {
-  userRequestSerializer,
-} from "../../schemas/users";
+import { userRequestSerializer } from "../../schemas/users";
 const userRoutes = Router();
 
 userRoutes.post(

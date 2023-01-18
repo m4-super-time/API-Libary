@@ -1,12 +1,10 @@
 import { AppDataSource } from "../../data-source";
 import { AppError } from "../../errors";
-
-import { IBooksRequest, IBooksResponse } from "../../interfaces";
 import { Books } from "../../entities/books.entity";
 import { Categories } from "../../entities/categories.entity";
 import { BooksCategories } from "../../entities/books_categories.entity";
 
-const createNewBookService = async (dataBook: any) => {
+const createNewBookService = async (dataBook: any): Promise<Books[]> => {
   const repositoryBooks = AppDataSource.getRepository(Books);
   const repositoryCategories = AppDataSource.getRepository(Categories);
   const repositoryBooksCategories =

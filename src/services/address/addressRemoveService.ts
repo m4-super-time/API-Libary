@@ -1,22 +1,21 @@
-import { AppDataSource } from "../../data-source"
-import { Addresses } from "../../entities"
-import { AppError } from "../../errors"
+import { AppDataSource } from "../../data-source";
+import { Addresses } from "../../entities";
+import { AppError } from "../../errors";
 
-export const addressRemoveService = async(id:string):Promise<void>=>{
+export const addressRemoveService = async (id: string): Promise<void> => {
+  const addressRepository = AppDataSource.getRepository(Addresses);
 
-    const addressRepository = AppDataSource.getRepository(Addresses)
+  const addressExists = await addressRepository.findOneBy({
+    user: {
+      id: id,
+    },
+  });
 
-    const addressExists = await addressRepository.findOneBy({
-        user:{
-            id:id
-        }
-    })
+  if (!addressExists) {
+    throw new AppError("non-existent address", 404);
+  }
 
- if(!addressExists){
-    throw new AppError("non-existent address", 404)
-}
- 
-  await addressRepository.delete({id: addressExists.id})  
+  await addressRepository.delete({ id: addressExists.id });
 
-  return
-}
+  return;
+};
