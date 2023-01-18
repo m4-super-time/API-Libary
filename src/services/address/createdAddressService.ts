@@ -1,41 +1,37 @@
 import { AppDataSource } from "../../data-source";
 import { IAddressRequest } from "../../interfaces";
-import {Addresses} from "../../entities/address.entity"
+import { Addresses } from "../../entities/address.entity";
 import { User } from "../../entities";
 import { AppError } from "../../errors";
 
-export const createAddressService = async (id:string, addressData:IAddressRequest): Promise<any> =>{
+export const createAddressService = async (
+  id: string,
+  addressData: IAddressRequest
+): Promise<any> => {
+  const addressRepository = AppDataSource.getRepository(Addresses);
+  const userRepository = AppDataSource.getRepository(User);
 
-    const addressRepository = AppDataSource.getRepository(Addresses)
-    const userRepository = AppDataSource.getRepository(User)
+  const userExists = await userRepository.findOneBy({
+    id,
+  });
 
-    const userExists = await userRepository.findOneBy({
-        id
-    })
+  if (!userExists) {
+    throw new AppError("User not exists", 400);
+  }
 
-    if(!userExists){
-        throw new AppError("User not exists", 400);
-    }
+  const addressExists = await addressRepository.findOneBy({
+    zipCode: addressData.zipCode,
+  });
 
+  if (addressExists) {
+    throw new AppError(" Address already exists", 400);
+  }
 
-    const addressExists = await addressRepository.findOneBy({
-        zipCode:addressData.zipCode,
-   
+  const instance = addressRepository.create({
+    ...addressData,
+    user: { id: userExists.id },
+  });
+  await addressRepository.save(instance);
 
-})
-
-    if(addressExists){
-        throw new AppError(" Address already exists", 400);
-
-    }
-
-   
-
-
-         const instance = addressRepository.create({...addressData, user:{id:userExists.id }})
-        await addressRepository.save(instance)
-
-        return instance
-
-
-}
+  return instance;
+};

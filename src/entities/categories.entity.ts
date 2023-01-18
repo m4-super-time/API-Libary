@@ -23,6 +23,3 @@ class Categories {
   book: Books;
 }
 export { Categories };
-
-// @ManyToOne(() => Categories, (categories) => categories)
-// category: Categories;

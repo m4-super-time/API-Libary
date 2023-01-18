@@ -1,31 +1,30 @@
 interface IAddressRequest {
-    zipCode: string,
-    street: string,
-    number?: string,
-    neighborhood?: string,
-    city: string,
-    state: string
+  zipCode: string;
+  street: string;
+  number?: string;
+  neighborhood?: string;
+  city: string;
+  state: string;
 }
 
 interface IAddress {
-    id: string,
-    zipCode: string,
-    street: string,
-    number?: string,
-    neighborhood?: string,
-    city: string,
-    state: string,
-    user: object
+  id: string;
+  zipCode: string;
+  street: string;
+  number?: string;
+  neighborhood?: string;
+  city: string;
+  state: string;
+  user: object;
 }
 
-interface IAddressUpdate{
-    zipCode?: string,
-    street?: string,
-    number?: string,
-    neighborhood?: string,
-    city?: string,
-    state?: string,
+interface IAddressUpdate {
+  zipCode?: string;
+  street?: string;
+  number?: string;
+  neighborhood?: string;
+  city?: string;
+  state?: string;
 }
 
-
-export { IAddress, IAddressRequest, IAddressUpdate }
+export { IAddress, IAddressRequest, IAddressUpdate };
