@@ -6,6 +6,9 @@ import { mockedEmployee, mockedEmployeeLogin, mockedUser, mockedUserLogin } from
 import { Categories } from "../../../entities/categories.entity";
 import { book1, book2 } from "../../mocks/books";
 import { Books } from "../../../entities/books.entity";
+import { Books_Cart } from "../../../entities/books_cart.entity";
+import { response } from "express";
+import { Cart } from "../../../entities/cart.entity";
 describe("/carts", () => {
     let connection: DataSource
     beforeAll(async() => {
@@ -20,6 +23,7 @@ describe("/carts", () => {
 
         const categoriesDb = connection.getRepository(Categories);
         const bookDb = connection.getRepository(Books);
+    
         const aventura = categoriesDb.create({
           category_name: "Aventura",
           description: "Aventura muito legal",
@@ -70,5 +74,29 @@ describe("/carts", () => {
         .set("Authorization", `Bearer ${employeeLoginResponse.body.token}`)
         expect(response.body).toHaveProperty("message");
         expect(response.status).toBe(400);
+    });
+
+    test("POST /carts - Must be able to list books from a cart", async() => {
+
+      const employeeLoginResponse = await request(app)
+      .post("/login")
+      .send(mockedEmployeeLogin);
+      
+      const bookToBeAdd = await request(app).get("/books");
+      const response = await request(app)
+      .post(`/carts/${bookToBeAdd.body[0].id}`)
+      .set("Authorization", `Bearer ${employeeLoginResponse.body.token}`)
+      await request(app)
+      .post(`/carts/${bookToBeAdd.body[1].id}`)
+      .set("Authorization", `Bearer ${employeeLoginResponse.body.token}`)
+
+      const responseGetCart = await request(app)
+      .get(`/carts/${response.body.id}`)
+      .set("Authorization", `Bearer ${employeeLoginResponse.body.token}`)
+      //expect(responseGetCart.body).toHaveLength(0)
+      expect(responseGetCart.status).toBe(200);
+      expect(responseGetCart.body[0]).toHaveProperty("id")
+      expect(responseGetCart.body[0]).toHaveProperty("cart")
+
     });
 })
