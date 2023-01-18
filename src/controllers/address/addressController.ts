@@ -10,6 +10,7 @@ import { listAllAddAdressesEmployeeService } from "../../services/address/listin
 export const createdAddressController= async (req:Request, res:Response) =>{
     const id = req.params.id
     const addressData:IAddressRequest = req.body
+
     const newAddress = await createAddressService(id, addressData) 
     return res.status(201).json(newAddress)
 

@@ -18,7 +18,8 @@ app.use("/login", sessionRouter);
 app.use("/categories", categoriesRoutes);
 app.use("/profile", profileRoutes);
 app.use("/books", booksRoutes);
-app.use("/stocks", stockRoutes)
+app.use("/address", addressRouter);
+app.use("/stocks", stockRoutes);
 app.use(handleAppError);
 
 export default app;
