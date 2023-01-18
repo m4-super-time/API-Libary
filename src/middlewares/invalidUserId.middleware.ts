@@ -3,7 +3,7 @@ import { Request, Response, NextFunction } from "express";
 import { AppDataSource } from "../data-source";
 import { User } from "../entities";
 import { AppError } from "../errors";
-const invalidIdMiddlewarer = async (
+const invalidUserIdMiddleware = async (
   req: Request,
   res: Response,
   next: NextFunction
@@ -25,4 +25,4 @@ const invalidIdMiddlewarer = async (
   return next();
 };
 
-export default invalidIdMiddlewarer;
+export default invalidUserIdMiddleware;

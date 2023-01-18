@@ -7,7 +7,6 @@ const userTokenVerificationMiddleware = async (
   next: NextFunction
 ) => {
   let token = req.headers.authorization;
-
   if (!token) {
     return res.status(401).json({ message: "Invalid Token" });
   }
