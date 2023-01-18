@@ -7,23 +7,21 @@ const userTokenVerificationMiddleware = async (
   next: NextFunction
 ) => {
   let token = req.headers.authorization;
-
   if (!token) {
     return res.status(401).json({ message: "Invalid Token" });
   }
 
   token = token.split(" ")[1];
-  jwt.verify(token, process.env.SECRET_KEY!, (error, decoded: any) => {
+  return jwt.verify(token, process.env.SECRET_KEY!, (error, decoded: any) => {
     if (error) {
       return res.status(401).json({ message: error.message });
     }
-
     req.user = {
       id: decoded.sub as string,
       isEmployee: decoded.isEmployee,
     };
+    next();
   });
-  next();
 };
 
 export default userTokenVerificationMiddleware;
