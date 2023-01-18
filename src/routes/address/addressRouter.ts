@@ -14,10 +14,8 @@ import { updateAddressSchema } from "../../schemas/address/addressSchema";
 
 const addressRouter = Router();
 
-//CRIAÇÃO DE ENDEREÇO
 addressRouter.post("/:id", createdAddressController);
 
-//LISTAGEM DE TODOS USUARIOS COM PERMIÇÃO DE EMPREGADO
 addressRouter.get(
   "",
   userTokenVerificationMiddleware,
@@ -25,14 +23,12 @@ addressRouter.get(
   listAllAddAdressesEmployeeControllers
 );
 
-//Litsando procura de endereço por id especifico do usuario
 addressRouter.get(
   "/:id",
   userTokenVerificationMiddleware,
   addressLookupByUserIdController
 );
 
-//ATUALIZAÇÃO DO ENDEREÇO
 addressRouter.patch(
   "/:id",
   userTokenVerificationMiddleware,
@@ -40,7 +36,6 @@ addressRouter.patch(
   addressUpdateController
 );
 
-//DELETAR ENDEREÇO
 addressRouter.delete(
   "/delete/:id",
   userTokenVerificationMiddleware,

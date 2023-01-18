@@ -1,5 +1,5 @@
 interface ICart {
-    book_id: string,
+  book_id: string;
 }
 
-export { ICart }
+export { ICart };

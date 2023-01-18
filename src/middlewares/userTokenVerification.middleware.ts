@@ -13,7 +13,6 @@ const userTokenVerificationMiddleware = async (
 
   token = token.split(" ")[1];
   return jwt.verify(token, process.env.SECRET_KEY!, (error, decoded: any) => {
-
     if (error) {
       return res.status(401).json({ message: error.message });
     }
