@@ -15,7 +15,7 @@ const createBookOnCartService = async (newBookId: string, userId:string) :Promis
     if(!newBookId){
         throw new AppError('Bad data', 400)
     }
-    
+
     if(!userId){
         throw new AppError('Bad data', 400)
     }
@@ -24,14 +24,14 @@ const createBookOnCartService = async (newBookId: string, userId:string) :Promis
         id:newBookId
     })
     if(!findBook){
-        throw new AppError("Book not found", 404)
+        throw new AppError('Bad data', 400)
     }
 
     const findUser = await userRepository.findOneBy({
         id:userId
     })
     if(!findUser){
-        throw new AppError("User not found", 404)
+        throw new AppError('Bad data', 400)
     }
 
     var findCart = await cartRepository.createQueryBuilder('cart')
