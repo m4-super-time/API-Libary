@@ -7,6 +7,7 @@ import userRoutes from "./routes/users";
 import { categoriesRoutes } from "./routes/categories";
 import profileRoutes from "./routes/profile";
 import { booksRoutes } from "./routes/books";
+import stockRoutes from "./routes/stock";
 
 const app = express();
 app.use(express.json());
@@ -16,6 +17,7 @@ app.use("/login", sessionRouter);
 app.use("/categories", categoriesRoutes);
 app.use("/profile", profileRoutes);
 app.use("/books", booksRoutes);
+app.use("/stocks", stockRoutes)
 app.use(handleAppError);
 
 export default app;
