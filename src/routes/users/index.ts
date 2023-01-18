@@ -32,7 +32,6 @@ userRoutes.get(
 
 userRoutes.patch(
   "/:id",
-  // dataVerificationByYupMiddlewares(userUpdateRequestSerializer),
   userTokenVerificationMiddleware,
   invalidIdMiddlewarer,
   updateDataUserController
