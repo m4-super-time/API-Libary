@@ -34,7 +34,7 @@ describe("/address", () => {
         expect(response.body).toHaveProperty("zipCode")
         expect(response.body).toHaveProperty("neighborhood")
         expect(response.body).toHaveProperty("number")
-        expect(response.body).toHaveProperty("userId")
+        expect(response.body).toHaveProperty("user")
         expect(response.status).toBe(201)
 
     })
@@ -74,7 +74,7 @@ describe("/address", () => {
         expect(response.body).toHaveProperty("zipCode")
         expect(response.body).toHaveProperty("neighborhood")
         expect(response.body).toHaveProperty("number")
-        expect(response.body).toHaveProperty("userId")
+        expect(response.body).toHaveProperty("user")
         expect(response.status).toBe(200)
     })
 
@@ -93,7 +93,7 @@ describe("/address", () => {
         const newValue = {street: "Nova Rua", number: "555"}
         const userLoginResponse = await request(app).post("/login").send(mockedUserLogin);
 
-        const response = await request(app).patch(`/address/13970660-5dbe-423a-9a9d-5c23b37943cf}`).set("Authorization", `Bearer ${userLoginResponse.body.token}`).send(newValue)
+        const response = await request(app).patch(`/address/13970660-5dbe-423a-9a9d-5c23b37943cf`).set("Authorization", `Bearer ${userLoginResponse.body.token}`).send(newValue)
 
         expect(response.body).toHaveProperty("message")
         expect(response.status).toBe(404)
@@ -101,19 +101,21 @@ describe("/address", () => {
 
     test("PATCH /address/:id - Should not be able to update address id field", async() => {
         const newValue = {id: "13970660-5dbe-423a-9a9d-5c23b37943cf"}
+        const employeeLoginResponse = await request(app).post("/login").send(mockedEmployeeLogin);
         const userLoginResponse = await request(app).post("/login").send(mockedUserLogin);
-        const addressToBeUpdate = await request(app).get(`/address/${userLoginResponse.body.id}`)
+        const addressToBeUpdate = await request(app).get("/address").set("Authorization", `Bearer ${employeeLoginResponse.body.token}`)
 
-        const response = await request(app).patch(`/address/${addressToBeUpdate.body.id}`).set("Authorization", `Bearer ${userLoginResponse.body.token}`).send(newValue)
+        const response = await request(app).patch(`/address/${addressToBeUpdate.body[0].id}`).set("Authorization", `Bearer ${userLoginResponse.body.token}`).send(newValue)
 
-        expect(response.body).toHaveProperty("message")
-        expect(response.status).toBe(401)
+        expect(response.body.id).not.toEqual("13970660-5dbe-423a-9a9d-5c23b37943cf")
+        expect(response.status).toBe(200)
     })
 
     test("PATCH /address/:id - Should be able to update address", async() => {
         const newValue = {street: "Nova Rua", number: "555"}
         const userLoginResponse = await request(app).post("/login").send(mockedUserLogin);
-        const addressToBeUpdate = await request(app).get(`/address/${userLoginResponse.body.id}`)
+
+        const addressToBeUpdate = await request(app).get(`/address/${userLoginResponse.body.user.id}`).set("Authorization", `Bearer ${userLoginResponse.body.token}`)
 
         const response = await request(app).patch(`/address/${addressToBeUpdate.body.id}`).set("Authorization", `Bearer ${userLoginResponse.body.token}`).send(newValue)
 
@@ -122,23 +124,23 @@ describe("/address", () => {
         expect(response.status).toBe(200)
     })
 
-    test("DELETE /address/:id - Should not be able to delete address without authentication", async() => {
+    test("DELETE /address/delete/:id - Should not be able to delete address without authentication", async() => {
         const userLoginResponse = await request(app).post("/login").send(mockedUserLogin);
-        const addressToBeDeleted = await request(app).get(`/address/${userLoginResponse.body.id}`)
+        const addressToBeDeleted = await request(app).get(`/address/${userLoginResponse.body.user.id}`).set("Authorization", `Bearer ${userLoginResponse.body.token}`)
 
-        const response = await request(app).delete(`/address/${addressToBeDeleted.body.id}`)
+        const response = await request(app).delete(`/address/delete/${addressToBeDeleted.body.id}`)
 
         expect(response.body).toHaveProperty("message")
         expect(response.status).toBe(401)
     })
 
-    test("DELETE /address/:id - Should not be able to delete another user address not being employee", async() => {
+    test("DELETE /address/delete/:id - Should not be able to delete another user address not being employee", async() => {
         const userLoginResponse = await request(app).post("/login").send(mockedUserLogin);
         const employeeLoginResponse = await request(app).post("/login").send(mockedEmployeeLogin);
 
-        const addressToBeDeleted = await request(app).get(`/address/${employeeLoginResponse.body.id}`)
+        const addressToBeDeleted = await request(app).get(`/address/${employeeLoginResponse.body.user.id}`).set("Authorization", `Bearer ${userLoginResponse.body.token}`)
 
-        const response = await request(app).delete(`/address/${addressToBeDeleted.body.id}`).set("Authorization", `Bearer ${userLoginResponse.body.token}`)
+        const response = await request(app).delete(`/address/delete/${addressToBeDeleted.body.id}`).set("Authorization", `Bearer ${userLoginResponse.body.token}`)
 
         expect(response.body).toHaveProperty("message")
         expect(response.status).toBe(403)
@@ -147,9 +149,9 @@ describe("/address", () => {
     test("DELETE /address/delete/:id - Must be able to delete address", async() => {
         const userLoginResponse = await request(app).post("/login").send(mockedUserLogin);
 
-        const addressToBeDeleted = await request(app).get(`/address/${userLoginResponse.body.id}`)
+        const addressToBeDeleted = await request(app).get(`/address/${userLoginResponse.body.user.id}`).set("Authorization", `Bearer ${userLoginResponse.body.token}`)
 
-        const response = await request(app).delete(`/address/${addressToBeDeleted.body.id}`).set("Authorization", `Bearer ${userLoginResponse.body.token}`)
+        const response = await request(app).delete(`/address/delete/${userLoginResponse.body.user.id}`).set("Authorization", `Bearer ${userLoginResponse.body.token}`)
 
         const employeeLoginResponse = await request(app).post("/login").send(mockedEmployeeLogin);
 

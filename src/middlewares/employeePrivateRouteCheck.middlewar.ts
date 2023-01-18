@@ -6,13 +6,12 @@ const employeePrivateRouteCheckMiddlewar = async (
   res: Response,
   next: NextFunction
 ) => {
-  
   const isEmployee = req.user.isEmployee;
 
   if (!isEmployee) {
     return res.status(403).json({ message: "Not authorization" });
   }
-  next();
+  return next();
 };
 
 export default employeePrivateRouteCheckMiddlewar;

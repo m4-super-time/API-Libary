@@ -1,14 +1,9 @@
 import { AppDataSource } from "../../data-source";
 import { Books } from "../../entities/books.entity";
-import { Categories } from "../../entities/categories.entity";
 
-const listAllBooksService = async () => {
+const listAllBooksService = async (): Promise<object> => {
   const repositoryBooks = AppDataSource.getRepository(Books);
-  //   const allBooks = await repositoryBooks.find();
-  const allBooks = await repositoryBooks.findOne({
-    relations: { booksCategories: true },
-    where: {},
-  });
+  const allBooks = await repositoryBooks.find();
   return allBooks;
 };
 
