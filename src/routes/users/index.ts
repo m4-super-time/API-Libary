@@ -9,11 +9,20 @@ import employeePrivateRouteCheckMiddlewar from "../../middlewares/employeePrivat
 
 import { userTokenVerificationMiddleware } from "../../middlewares";
 import { Router } from "express";
-import checkingIfYouAreTheAuthorizedUserOrEmployeeMiddlewar from "../../middlewares/checkingIfYouAreTheAuthorizedUserOrEmployee.middleware";
+import checkingIfYouAreTheAuthorizedUserOrEmployeeMiddleware from "../../middlewares/checkingIfYouAreTheAuthorizedUserOrEmployee.middleware";
 import invalidIdMiddlewarer from "../../middlewares/invalidId.middlewarer";
+import dataVerificationByYupMiddlewares from "../../middlewares/dataVerificationByYup.middleware";
+import {
+  userRequestSerializer,
+  userUpdateRequestSerializer,
+} from "../../schemas/users";
 const userRoutes = Router();
 
-userRoutes.post("", createNewUserController);
+userRoutes.post(
+  "",
+  dataVerificationByYupMiddlewares(userRequestSerializer),
+  createNewUserController
+);
 userRoutes.get(
   "",
   userTokenVerificationMiddleware,
@@ -23,7 +32,7 @@ userRoutes.get(
 
 userRoutes.patch(
   "/:id",
-
+  // dataVerificationByYupMiddlewares(userUpdateRequestSerializer),
   userTokenVerificationMiddleware,
   invalidIdMiddlewarer,
   updateDataUserController
@@ -32,13 +41,13 @@ userRoutes.patch(
 userRoutes.delete(
   "/delete/:id",
   userTokenVerificationMiddleware,
-  checkingIfYouAreTheAuthorizedUserOrEmployeeMiddlewar,
+  checkingIfYouAreTheAuthorizedUserOrEmployeeMiddleware,
   permanentlyDeleteUserController
 );
 userRoutes.delete(
   "/:id",
   userTokenVerificationMiddleware,
-  checkingIfYouAreTheAuthorizedUserOrEmployeeMiddlewar,
+  checkingIfYouAreTheAuthorizedUserOrEmployeeMiddleware,
   deActivateUserNotPermanentlyController
 );
 export default userRoutes;

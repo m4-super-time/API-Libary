@@ -91,7 +91,7 @@ describe("/users", () => {
         const response = await request(app).delete(`/users/${userTobeDeleteId}`).set("Authorization",userToken)
 
         expect(response.body).toHaveProperty("message")
-        expect(response.status).toBe(401)
+        expect(response.status).toBe(403)
     });
 
     test("DELETE /users/:id - Must be able to softDelete user", async() => {
@@ -109,7 +109,7 @@ describe("/users", () => {
         expect(findUser.body[0].isActive).toBe(false)
     });
 
-    test("DELETE /users/:id -  shouldn't be able to delete user with isActive = false",async () => {
+    test("DELETE /users/:id -  should not be able to delete user with isActive = false",async () => {
         await request(app).post('/users').send(mockedEmployee)
 
         const employeeLoginResponse = await request(app).post("/login").send(mockedEmployeeLogin);

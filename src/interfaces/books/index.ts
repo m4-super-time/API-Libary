@@ -6,13 +6,21 @@ interface IBooksRequest {
   categoryId: string;
 }
 
+interface IBooksRequestt {
+  name: string;
+  price: number;
+  author: string;
+  synopsis: string;
+  category: string;
+}
+
 interface IBooksResponse {
   id: string;
   name: string;
   price: number;
   author: string;
   synopsis: string;
-  categoryId: string;
+  category: string;
 }
 
 interface IStockBooks {
@@ -32,10 +40,19 @@ interface IBooksCategory {
   bookId: string;
 }
 
+interface IBooksUpdateRequest {
+  name: string;
+  price: number;
+  author: string;
+  synopsis: string;
+}
+
 export {
   IBooksRequest,
   IBooksResponse,
   IStockBooks,
   IBooksCart,
   IBooksCategory,
+  IBooksUpdateRequest,
+  IBooksRequestt,
 };

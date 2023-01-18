@@ -13,17 +13,17 @@ const userTokenVerificationMiddleware = async (
   }
 
   token = token.split(" ")[1];
-  jwt.verify(token, process.env.SECRET_KEY!, (error, decoded: any) => {
+  return jwt.verify(token, process.env.SECRET_KEY!, (error, decoded: any) => {
+
     if (error) {
       return res.status(401).json({ message: error.message });
     }
-
     req.user = {
       id: decoded.sub as string,
       isEmployee: decoded.isEmployee,
     };
+    next();
   });
-  next();
 };
 
 export default userTokenVerificationMiddleware;
