@@ -4,7 +4,7 @@ import { Stock } from "../../entities/stock.entity"
 import { AppError } from "../../errors"
 import { IStockRequest } from "../../interfaces/stock"
 
-const postStocksService = async (dataStock: IStockRequest) => {
+const postStocksService = async (dataStock: IStockRequest, idBook: string) => {
 
     if(dataStock.book_qntd < 0) {
         throw new AppError("Not Possible", 404)
@@ -14,7 +14,7 @@ const postStocksService = async (dataStock: IStockRequest) => {
     const bookRepository = AppDataSource.getRepository(Books)
 
     const bookExist = await bookRepository.findOneBy({
-        id: dataStock.book_id
+        id: idBook
     })
 
     if(!bookExist) {
