@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import "dotenv/config";
 
-const employeePrivateRouteCheckMiddlewar = async (
+const employeePrivateRouteCheckMiddleware = async (
   req: Request,
   res: Response,
   next: NextFunction
@@ -14,4 +14,4 @@ const employeePrivateRouteCheckMiddlewar = async (
   return next();
 };
 
-export default employeePrivateRouteCheckMiddlewar;
+export default employeePrivateRouteCheckMiddleware;

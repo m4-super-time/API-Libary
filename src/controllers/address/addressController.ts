@@ -37,7 +37,6 @@ export const addressUpdateController = async (req:Request, res: Response )=>{
 
 export const deleteAddressController = async (req:Request, res: Response)=>{
     const id = req.params.id
-    console.log(id)
     const addressRemove = await addressRemoveService(id)
     res.status(204).json({})
 
