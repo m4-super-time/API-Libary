@@ -7,7 +7,7 @@ import { Categories } from "../../../entities/categories.entity"
 import { book1, book2 } from "../../mocks/books"
 import { mockedEmployeeLogin, mockedUserLogin } from "../../mocks"
 
-describe("/stock", () => {
+describe("/stocks", () => {
     let connection: DataSource
 
     beforeAll(async() => {
@@ -40,7 +40,7 @@ describe("/stock", () => {
         await connection.destroy()
     })
 
-    test("POST /stock/:id - Should not be able to add stock to book without authorization", async() => {
+    test("POST /stocks/:id - Should not be able to add stock to book without authorization", async() => {
         const bookToAddStock = await request(app).get("/books")
 
         const response = await request(app).post(`/stock/${bookToAddStock.body[0].id}`).send({book_qntd: 100})
@@ -49,7 +49,7 @@ describe("/stock", () => {
         expect(response.status).toBe(401)
     })
 
-    test("POST /stock/:id - Should not be able to add stock to book with invalid id", async() => {
+    test("POST /stocks/:id - Should not be able to add stock to book with invalid id", async() => {
         const employeeLoginResponse = await request(app).post("/login").send(mockedEmployeeLogin);
 
         const response = await request(app).post(`/stock/13970660-5dbe-423a-9a9d-5c23b37943cf`).set("Authorization", `Bearer ${employeeLoginResponse.body.token}`).send({book_qntd: 100})
@@ -58,7 +58,7 @@ describe("/stock", () => {
         expect(response.status).toBe(404)
     })
 
-    test("POST /stock/:id - Should not be able to add stock to book without employee permission", async() => {
+    test("POST /stocks/:id - Should not be able to add stock to book without employee permission", async() => {
         const userLoginResponse = await request(app).post("/login").send(mockedUserLogin);
 
         const bookToAddStock = await request(app).get("/books")
@@ -69,7 +69,7 @@ describe("/stock", () => {
         expect(response.status).toBe(403)
     })
 
-    test("POST /stock/:id - Must be able to add stock to book", async() => {
+    test("POST /stocks/:id - Must be able to add stock to book", async() => {
         const employeeLoginResponse = await request(app).post("/login").send(mockedEmployeeLogin);
 
         const bookToAddStock = await request(app).get("/books")
@@ -81,7 +81,7 @@ describe("/stock", () => {
         expect(response.status).toBe(201)
     })
 
-    test("POST /stock/:id - Should not be able to add stock to book with already contain stock", async() => {
+    test("POST /stocks/:id - Should not be able to add stock to book with already contain stock", async() => {
         const employeeLoginResponse = await request(app).post("/login").send(mockedEmployeeLogin);
 
         const bookToAddStock = await request(app).get("/books")
@@ -92,7 +92,7 @@ describe("/stock", () => {
         expect(response.status).toBe(409)
     })
 
-    test("PATCH /stock/:id - Should not be able to update stock of book without authorization", async() => {
+    test("PATCH /stocks/:id - Should not be able to update stock of book without authorization", async() => {
         const bookToUpdateStock = await request(app).get("/books")
 
         const response = await request(app).post(`/stock/${bookToUpdateStock.body[0].id}`).send({book_qntd: 150})
@@ -101,7 +101,7 @@ describe("/stock", () => {
         expect(response.status).toBe(401)
     })
 
-    test("PATCH /stock/:id - Should not be able to update stock of book without employee permission", async() => {
+    test("PATCH /stocks/:id - Should not be able to update stock of book without employee permission", async() => {
         const userLoginResponse = await request(app).post("/login").send(mockedUserLogin);
 
         const bookToUpdateStock = await request(app).get("/books")
@@ -112,7 +112,7 @@ describe("/stock", () => {
         expect(response.status).toBe(403)
     })
 
-    test("PATCH /stock/:id - Must be able to update stock of book", async() => {
+    test("PATCH /stocks/:id - Must be able to update stock of book", async() => {
         const employeeLoginResponse = await request(app).post("/login").send(mockedEmployeeLogin);
 
         const bookToUpdateStock = await request(app).get("/books")

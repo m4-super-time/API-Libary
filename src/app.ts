@@ -8,6 +8,7 @@ import { categoriesRoutes } from "./routes/categories";
 import profileRoutes from "./routes/profile";
 import { booksRoutes } from "./routes/books";
 import addressRouter from "./routes/address/addressRouter";
+import stockRoutes from "./routes/stock";
 
 const app = express();
 app.use(express.json());
@@ -17,8 +18,7 @@ app.use("/login", sessionRouter);
 app.use("/categories", categoriesRoutes);
 app.use("/profile", profileRoutes);
 app.use("/books", booksRoutes);
-app.use("/address", addressRouter);
-
+app.use("/stocks", stockRoutes)
 app.use(handleAppError);
 
 export default app;
