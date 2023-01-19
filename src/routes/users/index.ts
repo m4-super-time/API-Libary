@@ -31,6 +31,7 @@ userRoutes.patch(
   "/:id",
   userTokenVerificationMiddleware,
   invalidUserIdMiddleware,
+  checkingIfYouAreTheAuthorizedUserOrEmployeeMiddleware,
   updateDataUserController
 );
 
