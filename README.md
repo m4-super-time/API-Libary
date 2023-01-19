@@ -161,12 +161,12 @@ Expected return:
 ```
 
 
-- Updating Users (PATCH)
+## - Updating Users (PATCH)
 /users/:id
 
 *Needs Headers with token.
 
-Update your own user - status 200
+### Update your own user - status 200
 
 Request example:
 ```
@@ -189,8 +189,7 @@ Expected return:
 ```
 
 
-Update user (isEmployee=true) - status 200
-
+### Update user (isEmployee=true) - status 200
 
 Request example:
 ```
@@ -213,7 +212,7 @@ Expected return:
 ```
 
 
-Update user(not auth) - status 401
+### Update user(not auth) - status 401
 
 Expected return:
 ```
@@ -222,7 +221,7 @@ Expected return:
 }
 ```
 
-Update user(invalid id) - status 404
+### Update user(invalid id) - status 404
 
 
 Expected return:
@@ -233,7 +232,7 @@ Expected return:
 ```
 
 
-Update user(invalid credential) - status 403
+### Update user(invalid credential) - status 403
 
 Expected return:
 ```
@@ -243,7 +242,7 @@ Expected return:
 ```
 
 
-Update user(inactive user) - status 400
+### Update user(inactive user) - status 400
 
 Expected return:
 ```
@@ -253,7 +252,7 @@ Expected return:
 ```
 
 
-- Listing Users (GET)
+## - Listing Users (GET)
 /users
 
 *No body required.
@@ -261,7 +260,7 @@ Expected return:
 *Needs Headers with token(with credential).
 
 
-List users - status 200- Private employee route
+### List users - status 200- Private employee route
 
 
 Request example:
@@ -305,7 +304,7 @@ Expected return:
 ```
 
 
-List users with unauthorized token - status 401
+### List users with unauthorized token - status 401
 
 
 Expected return:
@@ -315,7 +314,7 @@ Expected return:
 }
 ```
 
-List users without credentials - status 403
+### List users without credentials - status 403
 
 
 Expected return:
@@ -325,7 +324,7 @@ Expected return:
 }
 ```
 
-- Deleting Users (DELETE)
+##- Deleting Users (DELETE)
 /users/delete/:id
 
 *No body required.
@@ -334,14 +333,14 @@ Expected return:
 
 *Must have the isEmployee credential or delete the user's own
 
-Delete user - status 204
+### Delete user - status 204
 
 Expected return:
 
 No body returned for response
 
 
-Delete users with invalid id - status 404
+### Delete users with invalid id - status 404
 
 Expected return:
 ```
@@ -350,7 +349,7 @@ Expected return:
 }
 ```
 
-Delete user without having credentials - status 403
+### Delete user without having credentials - status 403
 
 Expected return:
 ```
@@ -360,20 +359,20 @@ Expected return:
 ```
 
 
-- Soft Deleting Users (DELETE)
+## - Soft Deleting Users (DELETE)
 /users/:id
 
 *No body required.
 
 *Needs Headers with token.
 
-Soft delete your own user - status 204
+### Soft delete your own user - status 204
 
 Expected return:
 No body returned for response
 
 
-Soft delete users with invalid id - status 404
+### Soft delete users with invalid id - status 404
 
 Expected return:
 ```
@@ -382,7 +381,7 @@ Expected return:
 }
 ```
 
-Soft delete users without user login  - status 401
+### Soft delete users without user login  - status 401
 
 Expected return:
 ```
@@ -391,7 +390,7 @@ Expected return:
 }
 ```
 
-Soft delete user without credential - status 403
+### Soft delete user without credential - status 403
 
 Expected return:
 ```
@@ -401,7 +400,7 @@ Expected return:
 ```
 
 
-Soft delete user not active - status 400
+### Soft delete user not active - status 400
 
 Expected return:
 ```
@@ -410,12 +409,12 @@ Expected return:
 }
 ```
 
-- Creating user address (POST)
+## - Creating user address (POST)
 /address/:id
 
 *Needs Headers with jwt token.
 
-Create user address - status 201
+### Create user address - status 201
 
 
 Request example:
@@ -442,7 +441,7 @@ Expected return:
 }
 ```
 
-Create user address with no authorization - status 401
+### Create user address with no authorization - status 401
 
 Expected return:
 ```
@@ -451,7 +450,7 @@ Expected return:
 }
 ```
  
-Create user address for another user - status 403
+### Create user address for another user - status 403
 
 Expected return:
 ```
@@ -460,7 +459,7 @@ Expected return:
 }
 ```
 
-Create user address bad data - status 400
+### Create user address bad data - status 400
 
 Expected return:
 ``````
@@ -469,13 +468,13 @@ Expected return:
 }
 ```
 
-- Listing addresses (GET)
+## - Listing addresses (GET)
 /address
 
 *Needs Headers with jwt token(with credential).
 
 
-List addresses - status 200
+### List addresses - status 200
 
 Expected return:
 ```
@@ -501,7 +500,7 @@ Expected return:
 ]
 ```
 
-List address with no authorization - status 401
+### List address with no authorization - status 401
 
 Expected return:
 ``````
@@ -510,7 +509,7 @@ Expected return:
 }
 ```
  
-List address with no credential - status 403
+### List address with no credential - status 403
 
 Expected return:
 ```
@@ -520,14 +519,14 @@ Expected return:
 ```
 
 
-- Get address (GET)
+## - Get address (GET)
 /address/:id
 
 *Needs Headers with jwt token.
 
 
 
-Get address - status 200
+### Get address - status 200
 
 Expected return:
 ```
@@ -542,7 +541,7 @@ Expected return:
 }
 ```
 
-Get user address without auth - status 401
+### Get user address without auth - status 401
 
 Expected return:
 ```
@@ -551,7 +550,7 @@ Expected return:
 }
 ```
 
-Get another user address without credential - status 403
+### Get another user address without credential - status 403
 
 Expected return:
 ```
@@ -559,7 +558,7 @@ Expected return:
 	“message”: “Unauthorized”
 }
 ```
-Get user address with invalid data - status 404
+### Get user address with invalid data - status 404
 
 Expected return:
 ```
@@ -567,7 +566,7 @@ Expected return:
 	“message”: “Not found”
 }
 ```
-Get user address with bad data - status 400
+### Get user address with bad data - status 400
 
 Expected return:
 ```
@@ -576,13 +575,13 @@ Expected return:
 }
 ```
 
-- Updating user address (PATCH)
+## - Updating user address (PATCH)
 /address/:id
 
 *Needs Headers with jwt token.
 
 
-Update user address - status 200
+### Update user address - status 200
 
 
 Request example:
@@ -609,7 +608,7 @@ Expected return:
 }
 ```
 
-Update user without auth - status 401
+### Update user without auth - status 401
 
 Expected return:
 ```
@@ -617,7 +616,7 @@ Expected return:
 	“message”: “Unauthorized”
 }
 ```
-Update user address - status 403
+### Update user address - status 403
 
 
 Expected return:
@@ -626,7 +625,7 @@ Expected return:
 	"message": "Unauthorized"
 }
 ```
-Update user address - status 200
+### Update user address - status 200
 
 
 Expected return:
@@ -637,13 +636,13 @@ Expected return:
 ```
 
 
-- Delete address (DELETE)
+## - Delete address (DELETE)
 /address/delete/:id
 
 *Needs Headers with jwt token.
 
 
-Delete address - status 200
+### Delete address - status 200
 
 Expected return:
 ```
@@ -652,7 +651,7 @@ Expected return:
 }
 ```
 
-Delete address - status 200
+### Delete address - status 200
 
 Expected return:
 ```
@@ -661,7 +660,7 @@ Expected return:
 }
 ```
 
-Delete user address with bad data - status 400
+### Delete user address with bad data - status 400
 
 Expected return:
 ```
@@ -670,7 +669,7 @@ Expected return:
 }
 ```
 
-Delete user address without auth - status 401
+### Delete user address without auth - status 401
 
 Expected return:
 ```
@@ -679,10 +678,10 @@ Expected return:
 }
 ```
 
-- Login User (POST)
+## - Login User (POST)
 /login
 
-Login user - status 200
+### Login user - status 200
 
 
 Request example:
@@ -699,7 +698,7 @@ Expected return:
 }
 ```
 
-Login admin - status 200
+### Login admin - status 200
 
 
 Request example:
@@ -716,7 +715,7 @@ Expected return:
 }
 ```
 
-Login user - status 403
+### Login user - status 403
 
 
 Request example:
@@ -734,13 +733,13 @@ Expected return:
 ```
 
 
-- User profile (GET)
+## - User profile (GET)
 /profile
 
 *Needs Headers with jwt token.
 
 
-Get user profile - status 200
+### Get user profile - status 200
 
 Expected return:
 ```
@@ -756,7 +755,7 @@ Expected return:
 }
 ```
 
-Get user profile with bad data - status 400
+### Get user profile with bad data - status 400
 
 Expected return:
 ```
@@ -765,7 +764,7 @@ Expected return:
 }
 ```
 
-Get user profile without auth - status 401
+### Get user profile without auth - status 401
 
 Expected return:
 ```
@@ -774,7 +773,7 @@ Expected return:
 }
 ```
 
-Get another user profile without credential - status 403
+### Get another user profile without credential - status 403
 
 Expected return:
 ```
@@ -783,7 +782,7 @@ Expected return:
 }
 ```
 
-Get invalid user profile - status 404
+### Get invalid user profile - status 404
 
 Expected return:
 ```
@@ -791,13 +790,15 @@ Expected return:
 	“message”: “Not found”
 }
 ```
-- Creating Books (POST)
+
+
+## - Creating Books (POST)
 /books
 
 *Needs Headers token with credential.
 
-Create book - status 201
 
+### Create book - status 201
 
 Request example:
 ```
@@ -821,8 +822,7 @@ Expected return:
 }
 ```
 
-Create book, bad data - status 400
-
+### Create book, bad data - status 400
 
 Request example:
 ```
@@ -840,8 +840,7 @@ Expected return:
 }
 ```
 
-Create duplicate book - status 409
-
+### Create duplicate book - status 409
 
 Request example:
 ```
@@ -860,11 +859,11 @@ Expected return:
 }
 ```
 
-Create book without user login - status 401
+### Create book without user login - status 401
 
 
 Request example:
-
+```
 {
 "name": "How to be a billionaire",
 	"price": 99.344,
@@ -880,7 +879,7 @@ Expected return:
 }
 ```
 
-Create book without credential - status 403
+### Create book without credential - status 403
 
 
 Request example:
@@ -901,13 +900,13 @@ Expected return:
 ```
 
 
-- Listing books (GET)
+## - Listing books (GET)
 /books
 
 *Don't need Headers token.
 
 
-List books - status 200
+### List books - status 200
 
 Expected return:
 ```
@@ -950,14 +949,13 @@ Expected return:
 ```
 
 
-- Getting books by id(GET)
+## - Getting books by id(GET)
 /books/:id
 
 *Don't need Headers token.
 
 
-Getting a book by id - status 200
-
+### Getting a book by id - status 200
 
 Expected return:
 ```
@@ -981,16 +979,16 @@ Expected return:
 ```
 
 
-Getting book not found - status 404
+### Getting book not found - status 404
 
 Expected return:
-
+```
 {
 	“message”: “Book not found”
 }
 ```
 
-Getting book bad data - status 400
+### Getting book bad data - status 400
 
 Expected return:
 ```
@@ -999,7 +997,7 @@ Expected return:
 }
 ```
 
-- Deleting book (DELETE)
+## - Deleting book (DELETE)
 /books/:id
 
 *Need Headers token.
@@ -1009,9 +1007,7 @@ Deleting a book - status 204
 No expected return
 
 
-
-
-Deleting a book without auth - status 401
+### Deleting a book without auth - status 401
 
 Expected return:
 ```
@@ -1020,7 +1016,8 @@ Expected return:
 }
 ```
 
-Deleting a book without credential - status 403
+
+### Deleting a book without credential - status 403
 
 Expected return:
 ```
@@ -1029,7 +1026,8 @@ Expected return:
 }
 ```
 
-Deleting a book with bad data - status 400
+
+### Deleting a book with bad data - status 400
 
 Expected return:
 ```
@@ -1038,12 +1036,14 @@ Expected return:
 }
 ```
 
-- Updating book (PATCH)
+
+## - Updating book (PATCH)
 /books/:id
 
 *Need Headers token.
 
-Updating a book - status 200
+
+### Updating a book - status 200
 
 Expected return:
 ```
@@ -1066,8 +1066,7 @@ Expected return:
 }
 ```
 
-
-Updating book without auth - status 401
+### Updating book without auth - status 401
 
 Expected return:
 ```
@@ -1076,7 +1075,7 @@ Expected return:
 }
 ```
 
-Updating book without credential - status 403
+### Updating book without credential - status 403
 
 Expected return:
 ```
@@ -1085,14 +1084,12 @@ Expected return:
 }
 ```
 
-- Listing Categories (GET)
+## - Listing Categories (GET)
 /categories
 
 *Don't need Headers token.
 
-
-List category - status 200
-
+### List category - status 200
 
 Expected return:
 ```
@@ -1115,14 +1112,13 @@ Expected return:
 ]
 ```
 
-- Select Category (GET)
+## - Select Category (GET)
 /categories/:id
 
 *Don't need Headers token.
 
 
-Select category - status 200
-
+### Select category - status 200
 
 Expected return:
 ```
@@ -1133,8 +1129,8 @@ Expected return:
 }
 ```
 
-Select category with bad data - status 400
 
+### Select category with bad data - status 400
 
 Expected return:
 ```
@@ -1143,8 +1139,8 @@ Expected return:
 }
 ```
 
-Select category with invalid id - status 404
 
+### Select category with invalid id - status 404
 
 Expected return:
 ```
@@ -1154,13 +1150,13 @@ Expected return:
 ```
 
 
-- Adding items on a cart (POST)
+## - Adding items on a cart (POST)
 /carts/:id
 
 *Need Headers token.
 
 
-Adding item - status 201
+### Adding item - status 201
 
 Expected return:
 ```
@@ -1192,7 +1188,7 @@ Expected return:
 ```
 
 
-Adding item with bad data - status 400
+### Adding item with bad data - status 400
 
 Expected return:
 ```
@@ -1201,7 +1197,7 @@ Expected return:
 }
 ```
 
-Adding item without auth - status 401
+### Adding item without auth - status 401
 
 Expected return:
 ```
@@ -1210,7 +1206,7 @@ Expected return:
 }
 ```
 
-Adding item in another cart without credential - status 403
+### Adding item in another cart without credential - status 403
 
 Expected return:
 ```
@@ -1219,13 +1215,13 @@ Expected return:
 }
 ```
 
-- Finding a cart (GET)
+## - Finding a cart (GET)
 /cart/:id
 
 *Need Headers token.
 
 
-Finding a cart - status 200
+### Finding a cart - status 200
 
 Expected return:
 ```
@@ -1253,7 +1249,7 @@ Expected return:
 }
 ```
 
-Finding a cart with bad data - status 400
+### Finding a cart with bad data - status 400
 
 Expected return:
 ```
@@ -1262,7 +1258,7 @@ Expected return:
 }
 ```
 
-Finding a cart without auth - status 401
+### Finding a cart without auth - status 401
 
 Expected return:
 ```
@@ -1271,7 +1267,7 @@ Expected return:
 }
 ```
 
-Finding a cart of another user without credential - status 403
+### Finding a cart of another user without credential - status 403
 
 Expected return:
 ```
@@ -1280,7 +1276,7 @@ Expected return:
 }
 ```
 
-Finding invalid cart - status 404
+### Finding invalid cart - status 404
 
 Expected return:
 ```
@@ -1289,13 +1285,13 @@ Expected return:
 }
 ```
 
-- Soft delete cart book (GET)
+## - Soft delete cart book (GET)
 /cart/books/:id
 
 *Need Headers token.
 
 
-Soft delete a cart book - status 200
+### Soft delete a cart book - status 200
 
 Expected return:
 ```
@@ -1304,7 +1300,7 @@ Expected return:
 }
 ```
 
-Soft delete a cart with bad data - status 400
+### Soft delete a cart with bad data - status 400
 
 Expected return:
 ```
@@ -1313,7 +1309,7 @@ Expected return:
 }
 ```
 
-Soft delete a cart without auth - status 401
+### Soft delete a cart without auth - status 401
 
 Expected return:
 ```
@@ -1322,7 +1318,7 @@ Expected return:
 }
 ```
 
-Soft delete another cart without credential - status 403
+### Soft delete another cart without credential - status 403
 
 Expected return:
 ```
@@ -1331,7 +1327,7 @@ Expected return:
 }
 ```
 
-Soft delete on invalid cart - status 404
+### Soft delete on invalid cart - status 404
 
 Expected return:
 ```
@@ -1341,7 +1337,7 @@ Expected return:
 ```
 
 
-- Delete cart book (GET)
+## - Delete cart book (GET)
 /cart/book/:id
 
 *Need Headers token.
@@ -1352,7 +1348,7 @@ Delete a cart book - status 200
 No expected return
 
 
-Delete a cart with bad data - status 400
+### Delete a cart with bad data - status 400
 
 Expected return:
 ```
@@ -1361,7 +1357,7 @@ Expected return:
 }
 ```
 
-Delete a cart without auth - status 401
+### Delete a cart without auth - status 401
 
 Expected return:
 ```
@@ -1370,7 +1366,7 @@ Expected return:
 }
 ```
 
-Delete another cart without credential - status 403
+### Delete another cart without credential - status 403
 
 Expected return:
 ```
@@ -1379,7 +1375,7 @@ Expected return:
 }
 ```
 
-Soft delete on invalid cart - status 404
+### Soft delete on invalid cart - status 404
 
 Expected return:
 ```
@@ -1389,13 +1385,13 @@ Expected return:
 ```
 
 
-- Create book stock (POST)
+## - Create book stock (POST)
 /stock/:id
 
 *Need Headers token with credential.
 
 
-Create a book stock - status 201
+### Create a book stock - status 201
 
 Expected return:
 ```
@@ -1406,7 +1402,7 @@ Expected return:
 }
 ```
 
-Create a book stock that already exists - status 409
+### Create a book stock that already exists - status 409
 
 Expected return:
 ```
@@ -1414,7 +1410,7 @@ Expected return:
 	“message”:  “Book already have stock”
 }
 ```
-Create a negative book stock - status 404
+### Create a negative book stock - status 404
 
 Expected return:
 ```
@@ -1422,7 +1418,7 @@ Expected return:
 	“message”:  “Not possible.”
 }
 ```
-Create a book stock with the book that does not exist - status 404
+### Create a book stock with the book that does not exist - status 404
 
 Expected return:
 ```
@@ -1430,13 +1426,15 @@ Expected return:
 	“message”:  “Not possible.”
 }
 ```
-- Select all books stock (GET)
+
+
+## - Select all books stock (GET)
 /stock
 
 *Need Headers token with credential.
 
 
-Select all books stock - status 200
+### Select all books stock - status 200
 
 Expected return:
 ```
@@ -1476,7 +1474,7 @@ Expected return:
 ]
 ```
 
-Select all books stock without credential - status 403
+### Select all books stock without credential - status 403
 
 Expected return:
 ```
@@ -1484,7 +1482,8 @@ Expected return:
 	“message”: “Not authorization”
 }
 ```
-Select all books stock without valid token - status 401
+
+### Select all books stock without valid token - status 401
 
 Expected return:
 ```
@@ -1494,13 +1493,13 @@ Expected return:
 ```
 
 
-- Update a book stock (PATCH)
+## - Update a book stock (PATCH)
 /stock/:id
 
 *Need Headers token with credential.
 
 
-Update a book stock - status 200
+### Update a book stock - status 200
 
 Expected return:
 ```
@@ -1510,7 +1509,7 @@ Expected return:
 }
 ```
 
-Update with a negative book stock - status 404
+### Update with a negative book stock - status 404
 
 Expected return:
 ```
@@ -1519,7 +1518,7 @@ Expected return:
 }
 ```
 
-Update stock without credential - status 403
+### Update stock without credential - status 403
 
 Expected return:
 ```
@@ -1528,7 +1527,7 @@ Expected return:
 }
 ```
 
-Update stock without valid token - status 401
+### Update stock without valid token - status 401
 
 Expected return:
 ```
@@ -1537,7 +1536,7 @@ Expected return:
 }
 ```
 
-Update with non-existent stock id - status 404
+### Update with non-existent stock id - status 404
 
 Expected return:
 ```
