@@ -503,7 +503,7 @@ Expected return:
 ### List address with no authorization - status 401
 
 Expected return:
-``````
+```
 {
 	"message": "Unauthorized"
 }
