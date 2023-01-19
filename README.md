@@ -462,7 +462,7 @@ Expected return:
 ### Create user address bad data - status 400
 
 Expected return:
-``````
+```
 {
 	"message": "Bad request"
 }
