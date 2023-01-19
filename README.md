@@ -53,14 +53,14 @@ This is an API made by Kenzie Academy students. The API works as a backend for a
 
 # Existing endpoints:
 
-/users - Create, Update, List Delete and SoftDelete
-/login - Login user
-/profile - Get current user profile
-/books - Create, Update, List Delete and SoftDelete
-/categories - Create, Update, List and SoftDelete
-/orders - Create, Update, List and SoftDelete
-/carts - Create, Update, List and Delete
-/stocks - Get the number of selected book in stock
+- /users - Create, Update, List Delete and SoftDelete
+- /login - Login user
+- /profile - Get current user profile
+- /books - Create, Update, List Delete and SoftDelete
+- /categories - Create, Update, List and SoftDelete
+- /orders - Create, Update, List and SoftDelete
+- /carts - Create, Update, List and Delete
+- /stocks - Get the number of selected book in stock
 
 
 # - Creating Users (POST)
